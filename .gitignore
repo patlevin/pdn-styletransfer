@@ -31,4 +31,4 @@ Generated\ Files/
 !**/[Pp]ackages/build/
 
 # these aren't meant to be published anywhere for copyright/licensing reasons
-assets/images/presets/
+**/assets/images/presets/
