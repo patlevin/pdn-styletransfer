@@ -67,7 +67,7 @@ The amount of available RAM also affects the resulting quality as larger tiles m
 
 The selected style image also affects the results (duh!), but not necessarily in a way that's obvious. This is actually the beauty of the effect (at least in my eyes), as you never quite get what you'd expect. Part of this comes from the limited training data and -time on the AI models used - specialised models that have been trained on a single image style or a small set of styles, perform much better.
 
-Another factor is teh amount of information that can be captures during style extraction. The model uses a 100-element style vector and trying to capture the essence of a mega-pixel artwork in just 100 numbers is... challenging, to say the least.
+Another factor is the amount of information that can be captures during style extraction. The model uses a 100-element style vector and trying to capture the essence of a mega-pixel artwork in just 100 numbers is... challenging, to say the least.
 
 This is also where the styleimage size setting comes into play. Selecting a smaller value will remove details and focus on "the big picture", while values that are too big might simply fail to capture any meanful data during the style extraction process.
 
@@ -75,7 +75,7 @@ This is also where the styleimage size setting comes into play. Selecting a smal
 
 Building from source requires Visual Studio 2019 (available for free [here](https://visualstudio.microsoft.com/vs/)).
 Presets cannot be recreated from the source code just to avoid any potential copyright issues. All dependencies are includes, except for the NuGet-packages.
-Teh NuGet-packages will be acquired automatically by Visual Studio.
+The NuGet-packages will be acquired automatically by Visual Studio.
 The included [ONNX runtime](https://microsoft.github.io/onnxruntime/) is a custom build using the CPU-backend with multi-core optimizations enabled.
 
 ## Future improvements
