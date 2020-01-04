@@ -38,9 +38,9 @@ After selecting a style, a sample image with the style applied is shown. This ex
 ![plugin preset example](StyleTransfer/assets/images/plugin_preset_example.png "Plugin: Preset Example")
 
 The "Stylize Amount"-slider lets you adjust the ratio between the selected style and the content image style. Note that this is not a simple alpha-blend, though.
-Even selecting zero ("0") will change the content image significantly, as the model tries to apply the style extacted from the content to the content itself. This process isn't perfect by any means, so keep that in mind.
+Even selecting zero ("0") will change the content image significantly, as the model tries to apply the style extracted from the content to the content itself. This process isn't perfect by any means, so keep that in mind.
 
-"Style Extraction" and "Style Transfer" models can be selected as well. The "High Quality" setting uses a larger model for extracting and transferring styles. The "Fast"-option selects a smaller, "distilled" version of the higher quality one that requires less memory and less CPU power. The resuls will be very different between the models and depending on the selected style and amount, you might even prefer one over the other.
+"Style Extraction" and "Style Transfer" models can be selected as well. The "High Quality" setting uses a larger model for extracting and transferring styles. The "Fast"-option selects a smaller, "distilled" version of the higher quality one that requires less memory and less CPU power. The results will be very different between the models and depending on the selected style and amount, you might even prefer one over the other.
 
 ### Creating custom styles
 
@@ -49,7 +49,7 @@ The "**Custom Style**"-tab allows you to select your own style images and apply 
 ![plugin custom style](StyleTransfer/assets/images/plugin_custom_style.png "Plugin: Custom Style")
 
 Clicking the "**Select Style Image**"-button or clicking the style image preview directly, will open a file dialog for image selection. The "**Style Image Size**"-slider determines the relative scaling factor of the style image that is used before the style is analyzed. Think of it as how much of the style image the model is allowed to "see" before the style is extracted.
-The colored bar below the slider indicates a size range that will probably yield teh best-looking results, with the green arrow pointing at the recommended value.
+The colored bar below the slider indicates a size range that will probably yield the best-looking results, with the green arrow pointing at the recommended value.
 You can select values outside this range (though RAM and minimum size restrictions still apply), but the results may not be as good.
 
 The plugin will display a warning, if you choose a combination of a big style image and large style size:
