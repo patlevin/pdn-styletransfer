@@ -1,0 +1,399 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ConfigDialog.buttonCancel" xml:space="preserve">
+    <value>&amp;Cancelar</value>
+  </data>
+  <data name="ConfigDialog.buttonOk" xml:space="preserve">
+    <value>Aceptar</value>
+  </data>
+  <data name="ConfigDialog.buttonSelectStyle" xml:space="preserve">
+    <value>Seleccionar imagen de estilo</value>
+  </data>
+  <data name="ConfigDialog.checkBoxAspect" xml:space="preserve">
+    <value>Utilice la relación de aspecto de la imagen original</value>
+  </data>
+  <data name="ConfigDialog.groupBoxStyleModel" xml:space="preserve">
+    <value>Extracción de estilo</value>
+  </data>
+  <data name="ConfigDialog.groupBoxTransformModel" xml:space="preserve">
+    <value>Transferencia de estilo</value>
+  </data>
+  <data name="ConfigDialog.labelAmount" xml:space="preserve">
+    <value>Intensidad del estilizado</value>
+  </data>
+  <data name="ConfigDialog.labelPresetExample" xml:space="preserve">
+    <value>Imagen de ejemplo</value>
+  </data>
+  <data name="ConfigDialog.labelSize" xml:space="preserve">
+    <value>Tamaño de la imagen de estilo</value>
+  </data>
+  <data name="ConfigDialog.labelSizeWarning" xml:space="preserve">
+    <value>Atención, imagen grande!</value>
+  </data>
+  <data name="ConfigDialog.labelStyle" xml:space="preserve">
+    <value>Imagen de estilo</value>
+  </data>
+  <data name="ConfigDialog.radioButtonStyleFast" xml:space="preserve">
+    <value>Rápido</value>
+  </data>
+  <data name="ConfigDialog.radioButtonStyleQuality" xml:space="preserve">
+    <value>Alta calidad</value>
+  </data>
+  <data name="ConfigDialog.radioButtonTransformFast" xml:space="preserve">
+    <value>Rápido</value>
+  </data>
+  <data name="ConfigDialog.radioButtonTransformQuality" xml:space="preserve">
+    <value>Alta calidad</value>
+  </data>
+  <data name="ConfigDialog.tabPageCustom" xml:space="preserve">
+    <value>Crear estilo</value>
+  </data>
+  <data name="ConfigDialog.tabPagePresets" xml:space="preserve">
+    <value>Preajustes</value>
+  </data>
+  <data name="EffectName" xml:space="preserve">
+    <value>Transferencia de estilo</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error irrecuperable</value>
+  </data>
+  <data name="ErrorMissingModel" xml:space="preserve">
+    <value>Faltan los modelos de IA necesarios.
+Instale el plugin de nuevo.</value>
+  </data>
+  <data name="FileDialog.Filter.AllFiles" xml:space="preserve">
+    <value>Todos los archivos</value>
+  </data>
+  <data name="FileDialog.Filter.Images" xml:space="preserve">
+    <value>Archivos de imagen</value>
+  </data>
+  <data name="FileDialog.Title" xml:space="preserve">
+    <value>Seleccionar imagen de estilo</value>
+  </data>
+  <data name="GraphEvent.CalculateIdentity" xml:space="preserve">
+    <value>El estilo de la imagen está determinado...</value>
+  </data>
+  <data name="GraphEvent.CalculateStyle" xml:space="preserve">
+    <value>El estilo de la imagen de estilo está determinado...</value>
+  </data>
+  <data name="GraphEvent.Finished" xml:space="preserve">
+    <value>Terminado.</value>
+  </data>
+  <data name="GraphEvent.MergeStyles" xml:space="preserve">
+    <value>Los estilos se combinan...</value>
+  </data>
+  <data name="GraphEvent.TransformContent" xml:space="preserve">
+    <value>El estilo se aplica a la imagen...</value>
+  </data>
+  <data name="Help.buttonSelectStyle" xml:space="preserve">
+    <value>Selecciona una imagen de estilo.</value>
+  </data>
+  <data name="Help.checkBoxAspect" xml:space="preserve">
+    <value>Si la casilla de verificación está marcada, la imagen de estilo será
+redimensionada a la relación de aspecto de la imagen original.</value>
+  </data>
+  <data name="Help.labelSizeWarning" xml:space="preserve">
+    <value>El imagen de estilo es muy grande.
+Las imágenes grandes requieren más tiempo para extraer el estilo.
+Elija una imagen más pequeña o utilice un valor más pequeño
+para el tamaño de la imagen de estilo.</value>
+  </data>
+  <data name="Help.labelStyleDimensions" xml:space="preserve">
+    <value>Muestra el tamaño de la imagen de estilo seleccionada en píxeles (ancho x alto).
+Las imágenes más grandes requieren más tiempo para extraer el estilo.</value>
+  </data>
+  <data name="Help.numericUpDownAmount" xml:space="preserve">
+    <value>Establece la intensidad del efecto
+de 0 (mantener el estilo) a 100 (transferir el estilo completamente).</value>
+  </data>
+  <data name="Help.numericUpDownSize" xml:space="preserve">
+    <value>Establece el tamaño de la imagen de estilo
+de 10 (baja resolución) a 100 (resolución completa).</value>
+  </data>
+  <data name="Help.pictureBoxStyle" xml:space="preserve">
+    <value>Vista previa de la imagen de estilo.
+Haga clic para seleccionar una imagen como plantilla para el estilo deseado.</value>
+  </data>
+  <data name="Help.radioButtonStyleFast" xml:space="preserve">
+    <value>Utilice un modelo pequeño y rápido para la extracción de estilos.</value>
+  </data>
+  <data name="Help.radioButtonStyleQuality" xml:space="preserve">
+    <value>Utilice el mejor modelo para la extracción de estilos.
+Ofrece los mejores resultados, pero requiere más tiempo de computación.</value>
+  </data>
+  <data name="Help.radioButtonTransformFast" xml:space="preserve">
+    <value>Utilice un modelo pequeño y rápido para la transferencia de estilos.
+Requiere menos tiempo de computación, pero da peores resultados.</value>
+  </data>
+  <data name="Help.radioButtonTransformQuality" xml:space="preserve">
+    <value>Utilice el mejor modelo para la transferencia de estilos.
+Ofrece los mejores resultados, pero requiere más tiempo de computación.</value>
+  </data>
+  <data name="Help.trackBarAmount" xml:space="preserve">
+    <value>Intensidad del efecto - determina cuánto influye el estilo en el resultado.</value>
+  </data>
+  <data name="Help.trackBarSize" xml:space="preserve">
+    <value>Cambia el tamaño de la imagen de estilo.
+Determina cuánto "ve" el efecto de la imagen de estilo.
+La barra colorada indica el rango de valores recomendados.
+La pequeña flecha verde señala un ajuste "bueno" para el valor.</value>
+  </data>
+  <data name="Preset:Abstract Blue" xml:space="preserve">
+    <value>Azul abstracto</value>
+  </data>
+  <data name="Preset:Blurred Tiles" xml:space="preserve">
+    <value>Azulejos borrosos</value>
+  </data>
+  <data name="Preset:Colored Chalk" xml:space="preserve">
+    <value>Dibujo con tiza colores</value>
+  </data>
+  <data name="Preset:Colored Chalk Dense" xml:space="preserve">
+    <value>Dibujo con tiza colores 2</value>
+  </data>
+  <data name="Preset:Colored Paper" xml:space="preserve">
+    <value>Papel de color</value>
+  </data>
+  <data name="Preset:Contemporary Art" xml:space="preserve">
+    <value>Pintura postmoderna</value>
+  </data>
+  <data name="Preset:Contemporary Art 2" xml:space="preserve">
+    <value>Pintura postmoderna 2</value>
+  </data>
+  <data name="Preset:Crayon" xml:space="preserve">
+    <value>Lápiz de cera</value>
+  </data>
+  <data name="Preset:Crumpled Paper" xml:space="preserve">
+    <value>Papel arrugado</value>
+  </data>
+  <data name="Preset:Cybernetic Dream" xml:space="preserve">
+    <value>Sueño cibernético</value>
+  </data>
+  <data name="Preset:Dark Omen" xml:space="preserve">
+    <value>Ambiente sombrío</value>
+  </data>
+  <data name="Preset:Diana's Painting" xml:space="preserve">
+    <value>La pintura de Diana</value>
+  </data>
+  <data name="Preset:Distorted Reality" xml:space="preserve">
+    <value>Realidad distorsionada</value>
+  </data>
+  <data name="Preset:Duotone Painting" xml:space="preserve">
+    <value>Duotone</value>
+  </data>
+  <data name="Preset:Electric Universe" xml:space="preserve">
+    <value>Universo Eléctrico</value>
+  </data>
+  <data name="Preset:Faded Memory" xml:space="preserve">
+    <value>desvanecerse</value>
+  </data>
+  <data name="Preset:Fauvism" xml:space="preserve">
+    <value>Fauvismo</value>
+  </data>
+  <data name="Preset:Impressionistic" xml:space="preserve">
+    <value>Impresionista</value>
+  </data>
+  <data name="Preset:Impure" xml:space="preserve">
+    <value>sucio</value>
+  </data>
+  <data name="Preset:Impure Pale" xml:space="preserve">
+    <value>sucio (pálido)</value>
+  </data>
+  <data name="Preset:Ink on Cardboard" xml:space="preserve">
+    <value>Tinta sobre cartón</value>
+  </data>
+  <data name="Preset:Ink on Cardboard 2" xml:space="preserve">
+    <value>Tinta sobre cartón 2</value>
+  </data>
+  <data name="Preset:Minimalist" xml:space="preserve">
+    <value>Minimalista</value>
+  </data>
+  <data name="Preset:Minimalist Pointilism" xml:space="preserve">
+    <value>Puntillismo minimalista</value>
+  </data>
+  <data name="Preset:Monet" xml:space="preserve">
+    <value>Monet</value>
+  </data>
+  <data name="Preset:Muted" xml:space="preserve">
+    <value>Atenuada</value>
+  </data>
+  <data name="Preset:Neon" xml:space="preserve">
+    <value>Neón</value>
+  </data>
+  <data name="Preset:Old Comic" xml:space="preserve">
+    <value>Cómic viejo</value>
+  </data>
+  <data name="Preset:Painted Wall" xml:space="preserve">
+    <value>Pintura mural</value>
+  </data>
+  <data name="Preset:Painting" xml:space="preserve">
+    <value>Pintura</value>
+  </data>
+  <data name="Preset:Painting 2" xml:space="preserve">
+    <value>Pintura 2</value>
+  </data>
+  <data name="Preset:Pastel on broken Canvas" xml:space="preserve">
+    <value>Pastel sobre lienzo desgarrado</value>
+  </data>
+  <data name="Preset:Pencil Drawing" xml:space="preserve">
+    <value>Dibujo a lápiz</value>
+  </data>
+  <data name="Preset:Pencil Drawing 2" xml:space="preserve">
+    <value>Dibujo a lápiz 2</value>
+  </data>
+  <data name="Preset:Pencil Scribbles" xml:space="preserve">
+    <value>Garabatos a lápiz</value>
+  </data>
+  <data name="Preset:Pencil Scribbles Softer" xml:space="preserve">
+    <value>Garabato de lápiz blando</value>
+  </data>
+  <data name="Preset:Reptile Skin" xml:space="preserve">
+    <value>Escamas de los reptiles</value>
+  </data>
+  <data name="Preset:Retro Blue" xml:space="preserve">
+    <value>Azul retro</value>
+  </data>
+  <data name="Preset:Shifted Reality" xml:space="preserve">
+    <value>Realidad cambiada</value>
+  </data>
+  <data name="Preset:Smeared Fingerprint" xml:space="preserve">
+    <value>Huella dactilar embadurnada</value>
+  </data>
+  <data name="Preset:Smeared Paint" xml:space="preserve">
+    <value>Pintura de pared embadurnada</value>
+  </data>
+  <data name="Preset:Soft Duotone Painting" xml:space="preserve">
+    <value>Duotone suave</value>
+  </data>
+  <data name="Preset:Very Muted" xml:space="preserve">
+    <value>Muy atenuada</value>
+  </data>
+  <data name="Preset:Watercolor Speckles" xml:space="preserve">
+    <value>Manchas de acuarela</value>
+  </data>
+  <data name="Preset:Watercolors" xml:space="preserve">
+    <value>Acuarela</value>
+  </data>
+  <data name="PresetChoiceNoPreset" xml:space="preserve">
+    <value>[ningún valor preestablecido]</value>
+  </data>
+  <data name="TileInfoFormat" xml:space="preserve">
+    <value>Imagen parcial {0} de {1}:</value>
+  </data>
+</root>

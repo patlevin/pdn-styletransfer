@@ -1,0 +1,34 @@
+# User-specific files
+*.user
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Ll]ogs/
+
+# Keep dependencies, though
+!**/[Dd]ependencies/**/x64/
+!**/[Dd]ependencies/**/x86/
+
+# VS 2015/2017/2019 cache/options
+.vs/
+
+# VS 2017 auto generated files
+Generated\ Files/
+
+# MSTest test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# Packages can be restored, so ignore them...
+**/[Pp]ackages/
+
+# ...unless they're MSBuild targets
+!**/[Pp]ackages/build/
+
+# these aren't meant to be published anywhere for copyright/licensing reasons
+assets/images/presets/

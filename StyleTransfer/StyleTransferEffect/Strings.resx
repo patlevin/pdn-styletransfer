@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ConfigDialog.buttonCancel" xml:space="preserve">
+    <value>&amp;Cancel</value>
+  </data>
+  <data name="ConfigDialog.buttonOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="ConfigDialog.buttonResetAmount" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ConfigDialog.buttonResetSize" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ConfigDialog.buttonSelectStyle" xml:space="preserve">
+    <value>Select Style Image</value>
+  </data>
+  <data name="ConfigDialog.checkBoxAspect" xml:space="preserve">
+    <value>Match aspect ratio with current image</value>
+  </data>
+  <data name="ConfigDialog.groupBoxStyleModel" xml:space="preserve">
+    <value>Style Extraction</value>
+  </data>
+  <data name="ConfigDialog.groupBoxTransformModel" xml:space="preserve">
+    <value>Style Transfer</value>
+  </data>
+  <data name="ConfigDialog.labelAmount" xml:space="preserve">
+    <value>Stylize Amount</value>
+  </data>
+  <data name="ConfigDialog.labelPresetExample" xml:space="preserve">
+    <value>Preset Example</value>
+  </data>
+  <data name="ConfigDialog.labelSize" xml:space="preserve">
+    <value>Style Image Size</value>
+  </data>
+  <data name="ConfigDialog.labelSizeWarning" xml:space="preserve">
+    <value>Warning, large image!</value>
+  </data>
+  <data name="ConfigDialog.labelStyle" xml:space="preserve">
+    <value>Style Image</value>
+  </data>
+  <data name="ConfigDialog.labelStyleDimensions" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ConfigDialog.radioButtonStyleFast" xml:space="preserve">
+    <value>Fast</value>
+  </data>
+  <data name="ConfigDialog.radioButtonStyleQuality" xml:space="preserve">
+    <value>High Quality</value>
+  </data>
+  <data name="ConfigDialog.radioButtonTransformFast" xml:space="preserve">
+    <value>Fast</value>
+  </data>
+  <data name="ConfigDialog.radioButtonTransformQuality" xml:space="preserve">
+    <value>High Quality</value>
+  </data>
+  <data name="ConfigDialog.tabPageCustom" xml:space="preserve">
+    <value>Custom Style</value>
+  </data>
+  <data name="ConfigDialog.tabPagePresets" xml:space="preserve">
+    <value>Presets</value>
+  </data>
+  <data name="EffectName" xml:space="preserve">
+    <value>Style Transfer</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ErrorMissingModel" xml:space="preserve">
+    <value>The required AI models couldn't be found.
+Please reinstall the plugin.</value>
+  </data>
+  <data name="FileDialog.Filter.AllFiles" xml:space="preserve">
+    <value>All Files</value>
+  </data>
+  <data name="FileDialog.Filter.Images" xml:space="preserve">
+    <value>Image Files</value>
+  </data>
+  <data name="FileDialog.Title" xml:space="preserve">
+    <value>Select Style Image</value>
+  </data>
+  <data name="GraphEvent.CalculateIdentity" xml:space="preserve">
+    <value>Extracting original image style...</value>
+  </data>
+  <data name="GraphEvent.CalculateStyle" xml:space="preserve">
+    <value>Extracting target image style...</value>
+  </data>
+  <data name="GraphEvent.Finished" xml:space="preserve">
+    <value>Finished.</value>
+  </data>
+  <data name="GraphEvent.MergeStyles" xml:space="preserve">
+    <value>Merging image styles...</value>
+  </data>
+  <data name="GraphEvent.TransformContent" xml:space="preserve">
+    <value>Stylizing image...</value>
+  </data>
+  <data name="Help.buttonSelectStyle" xml:space="preserve">
+    <value>Select the image that represents the style that is to be applied.</value>
+  </data>
+  <data name="Help.checkBoxAspect" xml:space="preserve">
+    <value>If checked, the style image will be resized
+to match the aspect ratio of the current image.</value>
+  </data>
+  <data name="Help.labelSizeWarning" xml:space="preserve">
+    <value>The style image is very big.
+The effect might take a long time to calculate.
+Choose a smaller image or set a lower style image size.</value>
+  </data>
+  <data name="Help.labelStyleDimensions" xml:space="preserve">
+    <value>Shows the size of the style image in pixels (width x height).
+Bigger images take longer to compute.</value>
+  </data>
+  <data name="Help.numericUpDownAmount" xml:space="preserve">
+    <value>Sets the intensity of the effect
+from 0 (original) to 100 (fully apply style).</value>
+  </data>
+  <data name="Help.numericUpDownSize" xml:space="preserve">
+    <value>Sets the size of the style image from
+10 (small resolution) to 100 (full resolution).</value>
+  </data>
+  <data name="Help.pictureBoxStyle" xml:space="preserve">
+    <value>Image that contains the desired style.
+Click to select an image.</value>
+  </data>
+  <data name="Help.radioButtonStyleFast" xml:space="preserve">
+    <value>Use a smaller, faster model to calculate the image style.</value>
+  </data>
+  <data name="Help.radioButtonStyleQuality" xml:space="preserve">
+    <value>Use the best model to calculate the image style.
+Takes longer to calculate, but delivers better results.</value>
+  </data>
+  <data name="Help.radioButtonTransformFast" xml:space="preserve">
+    <value>Use a smaller, faster model to transfer the style.
+Calculates quicker, but may yield worse results.</value>
+  </data>
+  <data name="Help.radioButtonTransformQuality" xml:space="preserve">
+    <value>Use the best model to transfer the style.
+Takes longer to calculate, but delivers better results.</value>
+  </data>
+  <data name="Help.trackBarAmount" xml:space="preserve">
+    <value>Select the intensity of the effect, i.e. how much
+the style image influences the result.</value>
+  </data>
+  <data name="Help.trackBarSize" xml:space="preserve">
+    <value>Change the size of the style image.
+Determines, how much of the image the effect can "see".
+The colored bar indicates the recommended value range.
+The small green arrow points to a "good" setting for the value.</value>
+  </data>
+  <data name="MessageStyleModelNotLoaded" xml:space="preserve">
+    <value>Style-model not loaded.</value>
+  </data>
+  <data name="MessageTransformerModelNotLoaded" xml:space="preserve">
+    <value>Transformer-model not loaded.</value>
+  </data>
+  <data name="PresetChoiceNoPreset" xml:space="preserve">
+    <value>[no preset]</value>
+  </data>
+  <data name="TileInfoFormat" xml:space="preserve">
+    <value>Segment {0} of {1}:</value>
+  </data>
+</root>
