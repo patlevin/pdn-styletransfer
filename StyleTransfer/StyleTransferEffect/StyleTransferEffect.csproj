@@ -98,7 +98,7 @@
     <Compile Include="Plugin\ExtendedTrackBar.Designer.cs">
       <DependentUpon>ExtendedTrackBar.cs</DependentUpon>
     </Compile>
-    <Compile Include="PluginSupportInfo.cs" />
+    <Compile Include="Plugin\PluginSupportInfo.cs" />
     <Compile Include="Plugin\Preset.cs" />
     <Compile Include="Plugin\Presets.cs" />
     <Compile Include="Plugin\PresetSource.cs" />
