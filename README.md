@@ -6,7 +6,7 @@ This plugin makes [Neural Style Transfer](https://en.wikipedia.org/wiki/Neural_S
 
 In neural style transfer, the style of an image is extracted and transferred to another image. The technique has become popular in recent years and can yield very interesting results. Here's an example using the painting “The Starry Night” by Vincent van Gogh:
 
-![neural style example](assets/images/Example.png "Neural style example")
+![neural style example](StyleTransfer/assets/images/Example.png "Neural style example")
 
 Most implementations use a single style or very limited set of styles and deliver high quality results. This plugin is more of an exploratory tool for art and fun, and uses arbitrary neural style transfer as described in the paper [Exploring the structure of a real-time, arbitrary neural artistic stylization network](https://arxiv.org/abs/1705.06830) by Ghiasi, et. al.
 The models where ported from pre-trained versions available in the [Magenta repository](https://github.com/tensorflow/magenta/tree/master/magenta/models/arbitrary_image_stylization). This technique allows interpolating between styles. Instead of blending the original image and the stylised result, the content image style is extracted and can be mixed with the target style at a selectable ratio.
@@ -26,16 +26,16 @@ The released version contains an installer that copies the plugin and all its re
 
 After the installation, the plugin can be found in, and selected from Paint.NET's "**Effects**"-menu in the section "**Artistic**":
 
-![plugin location](assets/images/plugin_location.png "Plugin: Selecting from menu")
+![plugin location](StyleTransfer/assets/images/plugin_location.png "Plugin: Selecting from menu")
 
 ### Selecting presets
 
-![plugin presets](assets/images/plugin_presets.png "Plugin: Preset Selection")
+![plugin presets](StyleTransfer/assets/images/plugin_presets.png "Plugin: Preset Selection")
 
 The first tab of the plugin lets you select a preset from a selection of styles extracted from random images. To avoid copyright issues, none of the style images are contained in the plugin or its source.
 After selecting a style, a sample image with the style applied is shown. This example image features a movable slider for a nice "before and after"-effect:
 
-![plugin preset example](assets/images/plugin_preset_example.png "Plugin: Preset Example")
+![plugin preset example](StyleTransfer/assets/images/plugin_preset_example.png "Plugin: Preset Example")
 
 The "Stylize Amount"-slider lets you adjust the ratio between the selected style and the content image style. Note that this is not a simple alpha-blend, though.
 Even selecting zero ("0") will change the content image significantly, as the model tries to apply the style extacted from the content to the content itself. This process isn't perfect by any means, so keep that in mind.
@@ -46,7 +46,7 @@ Even selecting zero ("0") will change the content image significantly, as the mo
 
 The "**Custom Style**"-tab allows you to select your own style images and apply them:
 
-![plugin custom style](assets/images/plugin_custom_style.png "Plugin: Custom Style")
+![plugin custom style](StyleTransfer/assets/images/plugin_custom_style.png "Plugin: Custom Style")
 
 Clicking the "**Select Style Image**"-button or clicking the style image preview directly, will open a file dialog for image selection. The "**Style Image Size**"-slider determines the relative scaling factor of the style image that is used before the style is analyzed. Think of it as how much of the style image the model is allowed to "see" before the style is extracted.
 The colored bar below the slider indicates a size range that will probably yield teh best-looking results, with the green arrow pointing at the recommended value.
@@ -54,7 +54,7 @@ You can select values outside this range (though RAM and minimum size restrictio
 
 The plugin will display a warning, if you choose a combination of a big style image and large style size:
 
-![plugin size warning](assets/images/plugin_custom_style_warning.png "Plugin: Size warning")
+![plugin size warning](StyleTransfer/assets/images/plugin_custom_style_warning.png "Plugin: Size warning")
 
 This happens, because the processing requires a large amount of RAM and once you use more RAM than is physically installed in your computer, your system will crawl to a halt, become unresponsive, and eventually even crash Paint.NET.
 The plugin will not use your settings, if they would result in too much RAM being used to protect the system from running out of memory.
@@ -94,10 +94,12 @@ I tried to pack as much into the plugin as I deemed necessary to make it useful 
 
 GPU-support is is a tough one. Not because it's hard to include - the ONNX runtime that does the model processing includes support for it - but because it's hard to decide on the direction to take while doing this.
 First there's the elephant in the room: NVIDIA's proprietary CUDA. Using CUDA has several disadvantages:
+
 1. You're locked to a single CUDA version, because AFAIK the libraries are not upwards compatible. The user also needs to have the CUDA version installed that you built against.
 2. It locks out all users of APUs, IGPUs, and non-NVIDIA hardware in general.
 
 There are a few alternatives, though:
+
 * Microsoft's [DirectML](https://docs.microsoft.com/en-us/windows/win32/direct3d12/dml-intro) - a hardware-agnostic API that sits on top of Direct3D 12 and DirectCompute
 * [Vulkan](https://www.khronos.org/vulkan/) - a platform independent, low-level graphics and compute API
 * [OpenCL](https://www.khronos.org/opencl/) and [SYCL](https://www.khronos.org/sycl/) - an open standard implemented by many hardware vendors, and supported from GPUs to dedicated FPGAs
