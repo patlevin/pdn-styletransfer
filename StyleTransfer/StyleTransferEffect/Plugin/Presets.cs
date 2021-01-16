@@ -222,6 +222,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
         public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }
