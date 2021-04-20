@@ -15,6 +15,8 @@ The models where ported from pre-trained versions available in the [Magenta repo
 
 The released version contains an installer that copies the plugin and all its required dependencies and data to the Paint.NET-Effects folder automatically.
 
+(If you just want to try it out, download the installer directly from [**HERE**](https://github.com/patlevin/pdn-styletransfer/releases/download/v1.0/StyleTransferEffect-Installer.exe))
+
 ### System requirements
 
 * Windows 7 or better, **64-bit** version
