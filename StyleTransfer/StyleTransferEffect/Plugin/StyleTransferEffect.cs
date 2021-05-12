@@ -55,12 +55,9 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
 
         #region Patch for assembly binding redirect
         // Flag to limit binding redirection to one-shot behaviour
-        private static bool IsLoaded = false;
+        private static readonly bool IsLoaded = false;
         private static readonly object syncLock = new object();
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
-            "CA1810:Initialize reference type static fields inline",
-            Justification = "Required by workaround for assembly binding redirect patch")]
         static StyleTransferEffect()
         {
             if (!IsLoaded)

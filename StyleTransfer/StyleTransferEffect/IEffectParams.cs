@@ -9,9 +9,6 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
     /// <summary>
     /// Parameters for calculating the effect
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage",
-        "CA2227:CollectionPropertiesShouldBeReadOnly",
-        Justification = "Tensor<T> doesn't support design pattern for replacing content")]
     public interface IEffectParams
     {
         /// <summary>
