@@ -248,7 +248,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
                 if (tileSize > 0)
                 {
                     var tileFormat = StringResources.Get("TileInfoFormat");
-                    var renderer = new TiledRenderer(SrcArgs.ISurface, DstArgs.ISurface, tileSize, MARGIN);
+                    var renderer = new TiledRenderer(SrcArgs.Surface, DstArgs.Surface, tileSize, MARGIN);
                     renderer.Update += UpdateTiled;
                     renderer.Process(graph);
 
@@ -264,7 +264,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
                     graph.Update += UpdateGraph;
                     var result = graph.Run();
                     graph.Update -= UpdateGraph;
-                    result.ToSurface(DstArgs.ISurface);
+                    result.ToSurface(DstArgs.Surface);
 
                     void UpdateGraph(object sender, EffectGraphEventArgs e)
                     {
