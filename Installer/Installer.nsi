@@ -51,8 +51,8 @@
   VIAddVersionKey CompanyName "Patrick Levin"
   VIAddVersionKey LegalCopyright "Patrick Levin © 2020"
   VIAddVersionKey FileDescription "Paint.NET Style Transfer Effect Plugin"
-  VIAddVersionKey FileVersion 1.0.0.0
-  VIAddVersionKey ProductVersion 1.0.0.0
+  VIAddVersionKey FileVersion 1.1.0.0
+  VIAddVersionKey ProductVersion 1.1.0.0
   VIAddVersionKey InternalName "Style Transfer Effect"
   VIAddVersionKey LegalTrademarks ""
   VIAddVersionKey OriginalFilename StyleTransferEffect.exe
@@ -124,9 +124,9 @@ SectionGroup "!$(SEC_REQ)" ReqGroup
   Section ".NET Standard 2.0 Packages"
     SectionIn RO
     SetOutPath $INSTDIR
-    File ${PKG_DIR}\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll
-    File ${PKG_DIR}\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll
-    File ${PKG_DIR}\System.Runtime.CompilerServices.Unsafe.4.7.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll
+    File ${PKG_DIR}\System.Buffers.4.5.1\lib\netstandard2.0\System.Buffers.dll
+    File ${PKG_DIR}\System.Memory.4.5.4\lib\netstandard2.0\System.Memory.dll
+    File ${PKG_DIR}\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll
   SectionEnd
 
   Section "AI Models"
