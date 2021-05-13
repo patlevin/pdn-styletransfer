@@ -63,7 +63,7 @@ The plugin will not use your settings, if they would result in too much RAM bein
 
 ## How it works
 
-The plugin will first determine whether it can proecess the content image as a whole. Since the AI models use a lot of RAM, not all image sizes can be processed while still fitting in the computer's memory. Big images will therefore be divided into tiles, which are processed separately. This means, that the style transfer doesn't apply to the image as a whole in such cases, resulting in artifacting at the tile boundaries.
+The plugin will first determine whether it can process the content image as a whole. Since the AI models use a lot of RAM, not all image sizes can be processed while still fitting in the computer's memory. Big images will therefore be divided into tiles, which are processed separately. This means, that the style transfer doesn't apply to the image as a whole in such cases, resulting in artifacting at the tile boundaries.
 In order to mitigate this effect somewhat, the algorithm creates a set of overlapping tiles that will be blended into each other. This works well in general, but results may vary depending on image size and -content.
 The amount of available RAM also affects the resulting quality as larger tiles means fewer tiles, and thus less potential artifacting...
 
