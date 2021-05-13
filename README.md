@@ -76,7 +76,7 @@ This is also where the styleimage size setting comes into play. Selecting a smal
 ## Building from source
 
 Building from source requires Visual Studio 2019 (available for free [here](https://visualstudio.microsoft.com/vs/)).
-Presets cannot be recreated from the source code just to avoid any potential copyright issues. All dependencies are includes, except for the NuGet-packages.
+Presets cannot be recreated from the source code just to avoid any potential copyright issues. All dependencies are included, except for the NuGet-packages.
 The NuGet-packages will be acquired automatically by Visual Studio.
 The included [ONNX runtime](https://microsoft.github.io/onnxruntime/) is a custom build using the CPU-backend with multi-core optimizations enabled.
 
