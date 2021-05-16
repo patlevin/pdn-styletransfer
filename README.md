@@ -84,29 +84,46 @@ The included [ONNX runtime](https://microsoft.github.io/onnxruntime/) is a custo
 
 I tried to pack as much into the plugin as I deemed necessary to make it useful and fun to play with. There are, however, a few things that I skipped, just to get it out the door first:
 
-* GPU-support
+* **GPU-support**
 * RAM-usage optimisations
 * combining multiple styles
 * user-created presets
 * support for cancel while processing the effect
 * advanced options (tiling overlap, blend modes)
-* improved AI models
+* **improved AI models**
 
-## GPU support
+## GPU Support Update
 
-GPU-support is is a tough one. Not because it's hard to include - the ONNX runtime that does the model processing includes support for it - but because it's hard to decide on the direction to take while doing this.
-First there's the elephant in the room: NVIDIA's proprietary CUDA. Using CUDA has several disadvantages:
+The DirectML team has made great progress since I first tested it. 
+I also tested the CUDA version of the ONNX Runtime, but at over 160 MB it's ridiculously huge in size and impractical for use.
 
-1. You're locked to a single CUDA version, because AFAIK the libraries are not upwards compatible. The user also needs to have the CUDA version installed that you built against.
-2. It locks out all users of APUs, IGPUs, and non-NVIDIA hardware in general.
+As it stands now, DirectML is the way to go. The latest version fully supports the models used in this project and peformance is
+where it should be:
 
-There are a few alternatives, though:
+| Device   |Style extraction|Content transform| Total    |
+|:---------|---------------:|----------------:|---------:|
+| CPU¹     | 225ms          | 3393ms          | 3619ms   |
+| iGPU²    |  64ms          |  882ms          |  947ms   |
+| dGPU³    |  31ms          |  508ms          |  540ms   |
 
-* Microsoft's [DirectML](https://docs.microsoft.com/en-us/windows/win32/direct3d12/dml-intro) - a hardware-agnostic API that sits on top of Direct3D 12 and DirectCompute
-* [Vulkan](https://www.khronos.org/vulkan/) - a platform independent, low-level graphics and compute API
-* [OpenCL](https://www.khronos.org/opencl/) and [SYCL](https://www.khronos.org/sycl/) - an open standard implemented by many hardware vendors, and supported from GPUs to dedicated FPGAs
-* [OpenGL|ES](https://www.khronos.org/opengles/) - the "embedded" version of OpenGL that forms the basis of WebGL
+¹[Intel® Core™ i7-7500U @ 25W](https://ark.intel.com/content/www/us/en/ark/products/95451/intel-core-i7-7500u-processor-4m-cache-up-to-3-50-ghz.html)
+²[Intel® HD Graphics 620](https://ark.intel.com/content/www/us/en/ark/products/95451/intel-core-i7-7500u-processor-4m-cache-up-to-3-50-ghz.html)
+³[NVIDIA GeForce GTX 950M, ASUS](https://www.techpowerup.com/gpu-specs/asus-gtx-950m-2-gb.b5469)
 
-DirectML is very recent and not very mature. The ONNX runtime support is very limited and doesn't implement the feature set required by the style transfer models.
-Unfortunately, DirectML is the only non-CUDA option for hardware acceleration that is currently available with the ONNX runtime.
-Building a SYCL or OpenGL|ES-based custom runtime provider would be a substantial project in and of itself...
+Numbers taken from a 10 run average after a single warmup run (see below).
+
+Even using the rather weak integrated GPU yielded very good results: style transfer is 3.8x faster.
+The equally weak discrete GPU (comparable to the more modern 150MX/250MX/350MX variants found in modern ultrabooks or AMD APUs) achieves an impressive
+6.7x speed-up and is about twice as fast as the iGPU.
+
+There is one small issue, though that I still need to investigate further. Note that the 10 run averages exclude a warm-up run.
+This first run is about 50% slower due to JIT and DLL loading - that's OK and still significantly faster than using just the CPU.
+The problem arises with the very first(?) run, however. The Intel® iGPU took a shocking 42 seconds to complete the first pass.
+I actually had to run it 3 times, because I genuinely thought the app had crashed...
+The dGPU's very first(?) run took "just" 12 seconds, which is still unacceptable compared to the CPU performance.
+
+Subsequent runs of the benchmark app (even after OS restart) displayed the expected behaviour of the first run being about 50% slower than the average.
+
+I suspect that the very first run needs to update the DirectX 12 shader cache and compiles the HLSL shaders for processing the models.
+Ideally I would like at least some level of control over this process such that I can integrate this step in the installer instead of
+leaving users frustrated with the plugin because it takes a minute to process...
