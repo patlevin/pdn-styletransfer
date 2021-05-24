@@ -124,6 +124,4 @@ The dGPU's very first(?) run took "just" 12 seconds, which is still unacceptable
 
 Subsequent runs of the benchmark app (even after OS restart) displayed the expected behaviour of the first run being about 50% slower than the average.
 
-I suspect that the very first run needs to update the DirectX 12 shader cache and compiles the HLSL shaders for processing the models.
-Ideally I would like at least some level of control over this process such that I can integrate this step in the installer instead of
-leaving users frustrated with the plugin because it takes a minute to process...
+Unfortunately I learned that there's no way to pre-compile shaders from another executable as [per the specs](https://github.com/microsoft/DirectX-Specs/blob/master/d3d/ShaderCache.md). The very first run of the models will therefore always be significantly slower if D3D12 is used.
