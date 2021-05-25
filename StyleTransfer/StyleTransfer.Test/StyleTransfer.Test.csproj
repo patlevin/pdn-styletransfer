@@ -70,11 +70,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EffectGraphTest.cs" />
+    <Compile Include="LinAlgTests.cs" />
+    <Compile Include="Matrix3Tests.cs" />
+    <Compile Include="MatrixOpsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RangedValueTest.cs" />
     <Compile Include="TensorExtensionsTest.cs" />
     <Compile Include="BindingRedirectTest.cs" />
     <Compile Include="SurfaceExtensionsTest.cs" />
+    <Compile Include="VectorOpsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
