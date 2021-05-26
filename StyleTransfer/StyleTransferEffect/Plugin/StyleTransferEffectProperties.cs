@@ -103,6 +103,11 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
         /// </summary>
         public float StyleScale => StyleSize / (1.0f * MAX_SIZE);
 
+        /// <summary>
+        /// Get or set the name of the color transfer method.
+        /// </summary>
+        public string ColorTransfer { get; set; }
+
         private readonly RangedValue<int> styleAmount = new RangedValue<int>(MAX_AMOUNT, 0, MAX_AMOUNT);
 
         private readonly RangedValue<int> styleSize = new RangedValue<int>(DEFAULT_SIZE, MIN_SIZE, MAX_SIZE);

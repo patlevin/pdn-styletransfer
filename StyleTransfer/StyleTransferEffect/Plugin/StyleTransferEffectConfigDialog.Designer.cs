@@ -64,6 +64,8 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.labelStyle = new System.Windows.Forms.Label();
             this.pictureBoxStyle = new System.Windows.Forms.PictureBox();
             this.helpProvider = new PaintDotNet.Effects.ML.StyleTransfer.Plugin.HelpProvider();
+            this.groupBoxColor = new System.Windows.Forms.GroupBox();
+            this.comboBoxColor = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAmount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarAmount)).BeginInit();
             this.groupBoxStyleModel.SuspendLayout();
@@ -73,6 +75,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.tabPageCustom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxStyle)).BeginInit();
+            this.groupBoxColor.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonOk
@@ -80,7 +83,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.buttonOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOk.Enabled = false;
-            this.buttonOk.Location = new System.Drawing.Point(152, 502);
+            this.buttonOk.Location = new System.Drawing.Point(152, 565);
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(75, 23);
             this.buttonOk.TabIndex = 0;
@@ -92,7 +95,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(238, 502);
+            this.buttonCancel.Location = new System.Drawing.Point(238, 565);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 1;
@@ -110,7 +113,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             // 
             this.numericUpDownAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.numericUpDownAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownAmount.Location = new System.Drawing.Point(238, 360);
+            this.numericUpDownAmount.Location = new System.Drawing.Point(238, 364);
             this.numericUpDownAmount.Name = "numericUpDownAmount";
             this.numericUpDownAmount.Size = new System.Drawing.Size(43, 22);
             this.numericUpDownAmount.TabIndex = 10;
@@ -125,7 +128,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             // 
             this.labelAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelAmount.AutoSize = true;
-            this.labelAmount.Location = new System.Drawing.Point(20, 344);
+            this.labelAmount.Location = new System.Drawing.Point(20, 348);
             this.labelAmount.Name = "labelAmount";
             this.labelAmount.Size = new System.Drawing.Size(76, 13);
             this.labelAmount.TabIndex = 9;
@@ -135,7 +138,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             // 
             this.trackBarAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBarAmount.LargeChange = 10;
-            this.trackBarAmount.Location = new System.Drawing.Point(6, 360);
+            this.trackBarAmount.Location = new System.Drawing.Point(6, 364);
             this.trackBarAmount.Maximum = 100;
             this.trackBarAmount.Name = "trackBarAmount";
             this.trackBarAmount.Size = new System.Drawing.Size(226, 45);
@@ -149,7 +152,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.groupBoxStyleModel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBoxStyleModel.Controls.Add(this.radioButtonStyleFast);
             this.groupBoxStyleModel.Controls.Add(this.radioButtonStyleQuality);
-            this.groupBoxStyleModel.Location = new System.Drawing.Point(17, 415);
+            this.groupBoxStyleModel.Location = new System.Drawing.Point(17, 419);
             this.groupBoxStyleModel.Name = "groupBoxStyleModel";
             this.groupBoxStyleModel.Size = new System.Drawing.Size(134, 75);
             this.groupBoxStyleModel.TabIndex = 11;
@@ -186,7 +189,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.groupBoxTransformModel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxTransformModel.Controls.Add(this.radioButtonTransformFast);
             this.groupBoxTransformModel.Controls.Add(this.radioButtonTransformQuality);
-            this.groupBoxTransformModel.Location = new System.Drawing.Point(176, 415);
+            this.groupBoxTransformModel.Location = new System.Drawing.Point(176, 419);
             this.groupBoxTransformModel.Name = "groupBoxTransformModel";
             this.groupBoxTransformModel.Size = new System.Drawing.Size(134, 75);
             this.groupBoxTransformModel.TabIndex = 12;
@@ -223,7 +226,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.buttonResetAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonResetAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonResetAmount.Image = global::PaintDotNet.Effects.ML.StyleTransfer.Properties.Resources.Reset;
-            this.buttonResetAmount.Location = new System.Drawing.Point(287, 360);
+            this.buttonResetAmount.Location = new System.Drawing.Point(287, 364);
             this.buttonResetAmount.Name = "buttonResetAmount";
             this.buttonResetAmount.Size = new System.Drawing.Size(22, 23);
             this.buttonResetAmount.TabIndex = 14;
@@ -470,12 +473,33 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             // 
             this.helpProvider.ToolTip = this.toolTipHelp;
             // 
+            // groupBoxColor
+            // 
+            this.groupBoxColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBoxColor.Controls.Add(this.comboBoxColor);
+            this.groupBoxColor.Location = new System.Drawing.Point(16, 500);
+            this.groupBoxColor.Name = "groupBoxColor";
+            this.groupBoxColor.Size = new System.Drawing.Size(293, 48);
+            this.groupBoxColor.TabIndex = 16;
+            this.groupBoxColor.TabStop = false;
+            this.groupBoxColor.Text = "Colors";
+            // 
+            // comboBoxColor
+            // 
+            this.comboBoxColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxColor.FormattingEnabled = true;
+            this.comboBoxColor.Location = new System.Drawing.Point(7, 20);
+            this.comboBoxColor.Name = "comboBoxColor";
+            this.comboBoxColor.Size = new System.Drawing.Size(280, 21);
+            this.comboBoxColor.TabIndex = 0;
+            // 
             // StyleTransferEffectConfigDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(323, 531);
+            this.ClientSize = new System.Drawing.Size(323, 594);
+            this.Controls.Add(this.groupBoxColor);
             this.Controls.Add(this.tabControlMode);
             this.Controls.Add(this.buttonResetAmount);
             this.Controls.Add(this.groupBoxTransformModel);
@@ -501,6 +525,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.tabPageCustom.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxStyle)).EndInit();
+            this.groupBoxColor.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -540,5 +565,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
         private System.Windows.Forms.PictureBox pictureBoxStyle;
         private System.Windows.Forms.Label labelPresetExample;
         private EffectPreview effectPreview;
+        private System.Windows.Forms.GroupBox groupBoxColor;
+        private System.Windows.Forms.ComboBox comboBoxColor;
     }
 }

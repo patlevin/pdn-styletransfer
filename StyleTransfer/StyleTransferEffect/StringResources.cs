@@ -97,5 +97,10 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
         /// Localised text for no preset selection
         /// </summary>
         public static string NoPreset => Get("PresetChoiceNoPreset");
+
+        /// <summary>
+        /// Localised text for no color transfer
+        /// </summary>
+        public static string NoColorTransfer => Get("NoColorTransfer");
     }
 }

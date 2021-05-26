@@ -3,6 +3,7 @@
 
 namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
 {
+    using Color;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
@@ -28,6 +29,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             LocalizeComponent();
             ApplyLocalisedHelp();
             LoadPresets();
+            LoadColorTransferMethods();
         }
 
         /// <summary>
@@ -69,6 +71,11 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             radioButtonTransformFast.Checked = properties.TransformerModel == ModelType.Fast;
             checkBoxAspect.Checked = properties.MatchAspectRatio;
 
+            if (properties.ColorTransfer != null)
+            {
+                comboBoxColor.SelectedValue = properties.ColorTransfer;
+            }
+
             if (properties.IsPreset)
             {
                 comboBoxPreset.SelectedValue = properties.PresetName;
@@ -99,6 +106,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             properties.MatchAspectRatio = checkBoxAspect.Checked;
             properties.IsPreset = comboBoxPreset.SelectedIndex > 0 && tabControlMode.SelectedTab == tabPagePresets;
             properties.PresetName = properties.IsPreset ? (string)comboBoxPreset.SelectedValue : string.Empty;
+            properties.ColorTransfer = (string)comboBoxColor.SelectedValue;
         }
 
         // Once the scaled style image exceed a certain size, warn the user.
@@ -223,6 +231,23 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             comboBoxPreset.DataSource = list;
             comboBoxPreset.DisplayMember = "DisplayName";
             comboBoxPreset.ValueMember = "Name";
+        }
+
+        private void LoadColorTransferMethods()
+        {
+            var list = new List<ColorTransferDescriptor>(TransferMethods.All);
+            list.Insert(0,
+                new ColorTransferDescriptor(StringResources.NoColorTransfer, string.Empty));
+
+            list.ForEach(entry =>
+            {
+                var localized = StringResources.Get("ColorTransfer:" + entry.Name);
+                entry.DisplayName = localized ?? entry.DisplayName;
+            });
+
+            comboBoxColor.DataSource = list;
+            comboBoxColor.DisplayMember = "DisplayName";
+            comboBoxColor.ValueMember = "Name";
         }
 
         #region Event Handlers
