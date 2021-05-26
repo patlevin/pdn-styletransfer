@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ColorTransfer:Cholesky Transfer" xml:space="preserve">
+    <value>Farben beibehalten (Cholesky-Zerlegung)</value>
+  </data>
+  <data name="ColorTransfer:Image Analogies" xml:space="preserve">
+    <value>Farben beibehalten (Image Analogies)</value>
+  </data>
+  <data name="ColorTransfer:Luma-only Transfer" xml:space="preserve">
+    <value>Farben beibehalten, nur Helligkeit aus Stil</value>
+  </data>
   <data name="ConfigDialog.buttonCancel" xml:space="preserve">
     <value>&amp;Abbrechen</value>
   </data>
@@ -128,6 +137,9 @@
   </data>
   <data name="ConfigDialog.checkBoxAspect" xml:space="preserve">
     <value>Seitenverhältnis des aktuellen Bildes übernehmen</value>
+  </data>
+  <data name="ConfigDialog.groupBoxColor" xml:space="preserve">
+    <value>Farben</value>
   </data>
   <data name="ConfigDialog.groupBoxStyleModel" xml:space="preserve">
     <value>Stilextrahierung</value>
@@ -210,6 +222,9 @@ Installieren Sie das Plugin erneut.</value>
 die Analyse auf das selbe Seitenverhältnis wie das aktuelle
 Bild gebracht.</value>
   </data>
+  <data name="Help.comboBoxColor" xml:space="preserve">
+    <value>Legt fest, was mit den Farben im Bild geschieht.</value>
+  </data>
   <data name="Help.labelSizeWarning" xml:space="preserve">
     <value>Die Stilvorlage ist sehr groß.
 Große Bilder benötigen mehr Zeit für das Extrahieren des Stils.
@@ -255,6 +270,9 @@ wie sehr der Stil das Ergbnis beeinflusst.</value>
 Bestimmt, wieviel der Effekt von der Stilvorlage "sieht".
 Der farbige Balken zeigt den empfohlenen Wertebereich an.
 Der kleine grüne Pfeil zeigt auf eine "gute" Einstellung für den Wert.</value>
+  </data>
+  <data name="NoColorTransfer" xml:space="preserve">
+    <value>Farben aus Stil übernehmen.</value>
   </data>
   <data name="Preset:Abstract Blue" xml:space="preserve">
     <value>Abstrakt Blau</value>

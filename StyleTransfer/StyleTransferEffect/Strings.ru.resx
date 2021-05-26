@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ColorTransfer:Cholesky Transfer" xml:space="preserve">
+    <value>Цвета исходного изображения (Холески)</value>
+  </data>
+  <data name="ColorTransfer:Image Analogies" xml:space="preserve">
+    <value>Цвета исходного изображения (Аналогии изображений)</value>
+  </data>
+  <data name="ColorTransfer:Luma-only Transfer" xml:space="preserve">
+    <value>Принять от стиля только яркость</value>
+  </data>
   <data name="ConfigDialog.buttonCancel" xml:space="preserve">
     <value>&amp;Отмена</value>
   </data>
@@ -128,6 +137,9 @@
   </data>
   <data name="ConfigDialog.checkBoxAspect" xml:space="preserve">
     <value>Применить пропорции исходного изображения</value>
+  </data>
+  <data name="ConfigDialog.groupBoxColor" xml:space="preserve">
+    <value>Цвета</value>
   </data>
   <data name="ConfigDialog.groupBoxStyleModel" xml:space="preserve">
     <value>Извлечение стиля</value>
@@ -209,6 +221,9 @@
     <value>Если этот флажок установлен, то изображение стиля будет
 изменено в соответствии с пропорциями исходного изображения.</value>
   </data>
+  <data name="Help.comboBoxColor" xml:space="preserve">
+    <value>Выбор того, что происходит с цветами в изображении.</value>
+  </data>
   <data name="Help.labelSizeWarning" xml:space="preserve">
     <value>Стиль очень большой.
 Большие изображения занимают больше времени для извлечения стиля.
@@ -254,6 +269,9 @@
 Определяет, насколько эффект "видит" образ стиля.
 Цветная полоса обозначает рекомендуемый диапазон значений.
 Маленькая зеленая стрелка указывает на "хорошую" настройку значения.</value>
+  </data>
+  <data name="NoColorTransfer" xml:space="preserve">
+    <value>Используются цвета стиля</value>
   </data>
   <data name="Preset:Abstract Blue" xml:space="preserve">
     <value>Аннотация Синий</value>

@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ColorTransfer:Cholesky Transfer" xml:space="preserve">
+    <value>Mantenga los colores (Factorización de Cholesky)</value>
+  </data>
+  <data name="ColorTransfer:Image Analogies" xml:space="preserve">
+    <value>Mantenga los colores (Image Analogies)</value>
+  </data>
+  <data name="ColorTransfer:Luma-only Transfer" xml:space="preserve">
+    <value>Mantenga los colores, utilice sólo la luminancia del estilo</value>
+  </data>
   <data name="ConfigDialog.buttonCancel" xml:space="preserve">
     <value>&amp;Cancelar</value>
   </data>
@@ -128,6 +137,9 @@
   </data>
   <data name="ConfigDialog.checkBoxAspect" xml:space="preserve">
     <value>Utilice la relación de aspecto de la imagen original</value>
+  </data>
+  <data name="ConfigDialog.groupBoxColor" xml:space="preserve">
+    <value>Colores</value>
   </data>
   <data name="ConfigDialog.groupBoxStyleModel" xml:space="preserve">
     <value>Extracción de estilo</value>
@@ -209,6 +221,9 @@ Instale el plugin de nuevo.</value>
     <value>Si la casilla de verificación está marcada, la imagen de estilo será
 redimensionada a la relación de aspecto de la imagen original.</value>
   </data>
+  <data name="Help.comboBoxColor" xml:space="preserve">
+    <value>Selecciona lo que ocurre con los colores de la imagen.</value>
+  </data>
   <data name="Help.labelSizeWarning" xml:space="preserve">
     <value>El imagen de estilo es muy grande.
 Las imágenes grandes requieren más tiempo para extraer el estilo.
@@ -254,6 +269,9 @@ Ofrece los mejores resultados, pero requiere más tiempo de computación.</value
 Determina cuánto "ve" el efecto de la imagen de estilo.
 La barra colorada indica el rango de valores recomendados.
 La pequeña flecha verde señala un ajuste "bueno" para el valor.</value>
+  </data>
+  <data name="NoColorTransfer" xml:space="preserve">
+    <value>Toma los colores del estilo.</value>
   </data>
   <data name="Preset:Abstract Blue" xml:space="preserve">
     <value>Azul abstracto</value>

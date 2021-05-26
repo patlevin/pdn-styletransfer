@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ColorTransfer:Cholesky Transfer" xml:space="preserve">
+    <value>Keep original colors (Cholesky-Decomposition)</value>
+  </data>
+  <data name="ColorTransfer:Image Analogies" xml:space="preserve">
+    <value>Keep original colors (Image Analogies)</value>
+  </data>
+  <data name="ColorTransfer:Luma-only Transfer" xml:space="preserve">
+    <value>Keep original colors, only use luminance from style</value>
+  </data>
   <data name="ConfigDialog.buttonCancel" xml:space="preserve">
     <value>&amp;Cancel</value>
   </data>
@@ -134,6 +143,9 @@
   </data>
   <data name="ConfigDialog.checkBoxAspect" xml:space="preserve">
     <value>Match aspect ratio with current image</value>
+  </data>
+  <data name="ConfigDialog.groupBoxColor" xml:space="preserve">
+    <value>Color</value>
   </data>
   <data name="ConfigDialog.groupBoxStyleModel" xml:space="preserve">
     <value>Style Extraction</value>
@@ -218,6 +230,9 @@ Please reinstall the plugin.</value>
     <value>If checked, the style image will be resized
 to match the aspect ratio of the current image.</value>
   </data>
+  <data name="Help.comboBoxColor" xml:space="preserve">
+    <value>Selects what happens with the colors in the image.</value>
+  </data>
   <data name="Help.labelSizeWarning" xml:space="preserve">
     <value>The style image is very big.
 The effect might take a long time to calculate.
@@ -269,6 +284,9 @@ The small green arrow points to a "good" setting for the value.</value>
   </data>
   <data name="MessageTransformerModelNotLoaded" xml:space="preserve">
     <value>Transformer-model not loaded.</value>
+  </data>
+  <data name="NoColorTransfer" xml:space="preserve">
+    <value>Take colors from style.</value>
   </data>
   <data name="PresetChoiceNoPreset" xml:space="preserve">
     <value>[no preset]</value>

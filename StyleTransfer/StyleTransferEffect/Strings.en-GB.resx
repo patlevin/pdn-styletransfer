@@ -117,17 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ColorTransfer:Cholesky Transfer" xml:space="preserve">
+    <value>Keep original colours (Cholesky-Decomposition)</value>
+  </data>
+  <data name="ColorTransfer:Image Analogies" xml:space="preserve">
+    <value>Keep original colours (Image Analogies)</value>
+  </data>
+  <data name="ColorTransfer:Luma-only Transfer" xml:space="preserve">
+    <value>Keep original colours, only use luminance from style</value>
+  </data>
+  <data name="ConfigDialog.groupBoxColor" xml:space="preserve">
+    <value>Colour</value>
+  </data>
   <data name="ConfigDialog.labelAmount" xml:space="preserve">
     <value>Stylise Amount</value>
   </data>
   <data name="GraphEvent.TransformContent" xml:space="preserve">
     <value>Stylising image...</value>
   </data>
+  <data name="Help.comboBoxColor" xml:space="preserve">
+    <value>Selects what happens with the colours in the image.</value>
+  </data>
   <data name="Help.trackBarSize" xml:space="preserve">
     <value>Change the size of the style image.
 Determines, how much of the image the effect can "see".
 The coloured bar indicates the recommended value range.
 The small green arrow points to a "good" setting for the value.</value>
+  </data>
+  <data name="NoColorTransfer" xml:space="preserve">
+    <value>Take colours from style.</value>
   </data>
   <data name="Preset:Colored Chalk" xml:space="preserve">
     <value>Coloured Chalk</value>

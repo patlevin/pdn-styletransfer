@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ColorTransfer:Cholesky Transfer" xml:space="preserve">
+    <value>Préserver les couleurs (Factorisation de Cholesky)</value>
+  </data>
+  <data name="ColorTransfer:Image Analogies" xml:space="preserve">
+    <value>Préserver les couleurs (analogies d'images)</value>
+  </data>
+  <data name="ColorTransfer:Luma-only Transfer" xml:space="preserve">
+    <value>Préserver les couleurs, n'utiliser que la luminance du style</value>
+  </data>
   <data name="ConfigDialog.buttonCancel" xml:space="preserve">
     <value>&amp;Annuler</value>
   </data>
@@ -128,6 +137,9 @@
   </data>
   <data name="ConfigDialog.checkBoxAspect" xml:space="preserve">
     <value>Adopter les proportions de l'image originale</value>
+  </data>
+  <data name="ConfigDialog.groupBoxColor" xml:space="preserve">
+    <value>Couleurs</value>
   </data>
   <data name="ConfigDialog.groupBoxStyleModel" xml:space="preserve">
     <value>Extraction de style</value>
@@ -209,6 +221,9 @@ Installez à nouveau le plugin.</value>
     <value>Si la case est cochée, l'image de style sera
 redimensionnée au proportions de l'image originale.</value>
   </data>
+  <data name="Help.comboBoxColor" xml:space="preserve">
+    <value>Sélectionne ce qui arrive aux couleurs de l'image.</value>
+  </data>
   <data name="Help.labelSizeWarning" xml:space="preserve">
     <value>L'image de style est très grande.
 Les grandes images nécessitent plus de temps pour en extraire le style.
@@ -253,6 +268,9 @@ Offre les meilleurs résultats, mais nécessite plus de temps de traitement.</va
 Détermine la partie de l'image que l'effet peut "voir".
 La barre colorée indique la plage de valeurs recommandée.
 La petite flèche verte indique un "bon" réglage de la valeur.</value>
+  </data>
+  <data name="NoColorTransfer" xml:space="preserve">
+    <value>Les couleurs du style sont adoptées</value>
   </data>
   <data name="Preset:Abstract Blue" xml:space="preserve">
     <value>Bleu abstrait</value>
