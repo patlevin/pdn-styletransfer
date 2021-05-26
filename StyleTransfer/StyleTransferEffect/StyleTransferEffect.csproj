@@ -75,11 +75,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Color\CholeskyTransfer.cs" />
+    <Compile Include="Color\ColorTransfer.cs" />
+    <Compile Include="Color\IColorTransfer.cs" />
+    <Compile Include="Color\ImageAnalogies.cs" />
+    <Compile Include="Color\LinearTransfer.cs" />
+    <Compile Include="Color\LuminanceOnlyTransfer.cs" />
+    <Compile Include="Color\PixelOps.cs" />
+    <Compile Include="Color\Sampler.cs" />
+    <Compile Include="Color\TransferMethodAttribute.cs" />
+    <Compile Include="Color\TransferMethods.cs" />
     <Compile Include="EffectGraph.cs" />
     <Compile Include="EffectModel.cs" />
     <Compile Include="EffectParams.cs" />
     <Compile Include="IEffectModel.cs" />
     <Compile Include="IEffectParams.cs" />
+    <Compile Include="Maths\Hashes.cs" />
+    <Compile Include="Maths\IVector3.cs" />
+    <Compile Include="Maths\LinAlg.cs" />
+    <Compile Include="Maths\MathF.cs" />
+    <Compile Include="Maths\Matrix3.cs" />
+    <Compile Include="Maths\Matrix3Wrapper.cs" />
+    <Compile Include="Maths\MatrixOps.cs" />
+    <Compile Include="Maths\Vector3.cs" />
+    <Compile Include="Maths\Vector3Ref.cs" />
+    <Compile Include="Maths\VectorOps.cs" />
     <Compile Include="Plugin\ArchiveSource.cs" />
     <Compile Include="Plugin\CsvSource.cs" />
     <Compile Include="Plugin\EffectPreview.cs">
