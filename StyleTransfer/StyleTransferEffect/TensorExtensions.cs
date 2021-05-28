@@ -20,7 +20,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
         /// <summary>
         /// Return Tensor width if NHWC-formatted
         /// </summary>
-        public static int Width(this Tensor<float> tensor)
+        public static int Width<T>(this Tensor<T> tensor)
         {
             Contract.Requires(tensor != null);
             return tensor.Dimensions[2];
@@ -29,7 +29,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
         /// <summary>
         /// Return Tensor height if NHWC-formatted
         /// </summary>
-        public static int Height(this Tensor<float> tensor)
+        public static int Height<T>(this Tensor<T> tensor)
         {
             Contract.Requires(tensor != null);
             return tensor.Dimensions[1];
@@ -98,6 +98,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
             // assume NHWC formatted tensor
             var cols = Math.Min(surface.Width, tensor.Dimensions[2]);
             var rows = Math.Min(surface.Height, tensor.Dimensions[1]);
+            var data = ((DenseTensor<float>)tensor).Buffer.Span;
             var line = new byte[surface.Stride];
             var stride = tensor.Strides[1];
 
@@ -107,9 +108,9 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
                 for (int col = 0; col < cols; ++col, index += 3)
                 {
                     // convert from RGB [0..1] to BGRA [0..255] 
-                    line[col * 4 + 0] = (byte)(tensor.GetValue(index + 2) * 255);
-                    line[col * 4 + 1] = (byte)(tensor.GetValue(index + 1) * 255);
-                    line[col * 4 + 2] = (byte)(tensor.GetValue(index + 0) * 255);
+                    line[col * 4 + 0] = Clamp(data[index + 2] * 255);
+                    line[col * 4 + 1] = Clamp(data[index + 1] * 255);
+                    line[col * 4 + 2] = Clamp(data[index + 0] * 255);
                     line[col * 4 + 3] = 255;
                 }
 
@@ -140,9 +141,9 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
             // rescale and remap BGR to ARGB
             for (int i = 0; i < columns; ++i)
             {
-                row[i * 4 + 2] = (byte)(data[offset + 3 * i + 0] * 255);
-                row[i * 4 + 1] = (byte)(data[offset + 3 * i + 1] * 255);
-                row[i * 4 + 0] = (byte)(data[offset + 3 * i + 2] * 255);
+                row[i * 4 + 2] = Clamp(data[offset + 3 * i + 0] * 255);
+                row[i * 4 + 1] = Clamp(data[offset + 3 * i + 1] * 255);
+                row[i * 4 + 0] = Clamp(data[offset + 3 * i + 2] * 255);
                 row[i * 4 + 3] = 255;
             }
 
@@ -170,9 +171,9 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
             // rescale and remap BGR to ARGB
             for (int i = 0, j = row.Offset; i < columns; ++i, j += 4)
             {
-                dest[j + 2] = (byte)(data[offset + 3 * i + 0] * 255);
-                dest[j + 1] = (byte)(data[offset + 3 * i + 1] * 255);
-                dest[j + 0] = (byte)(data[offset + 3 * i + 2] * 255);
+                dest[j + 2] = Clamp(data[offset + 3 * i + 0] * 255);
+                dest[j + 1] = Clamp(data[offset + 3 * i + 1] * 255);
+                dest[j + 0] = Clamp(data[offset + 3 * i + 2] * 255);
                 dest[j + 3] = 255;
             }
 
@@ -318,9 +319,9 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
             var b = 1.0f - c;
             for (int i = 0, j = 0; i < len; ++i, ++j)
             {
-                z[j] = (byte)(x[j] * b + y[j] * c); ++j;
-                z[j] = (byte)(x[j] * b + y[j] * c); ++j;
-                z[j] = (byte)(x[j] * b + y[j] * c); ++j;
+                z[j] = Clamp(x[j] * b + y[j] * c); ++j;
+                z[j] = Clamp(x[j] * b + y[j] * c); ++j;
+                z[j] = Clamp(x[j] * b + y[j] * c); ++j;
                 z[j] = 255;
             }
 
@@ -344,9 +345,9 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
 
             for (int i = 0; i < len; ++i, ++s, ++t)
             {
-                za[r++] = (byte)(xa[s++] * b + ya[t++] * c);
-                za[r++] = (byte)(xa[s++] * b + ya[t++] * c);
-                za[r++] = (byte)(xa[s++] * b + ya[t++] * c);
+                za[r++] = Clamp(xa[s++] * b + ya[t++] * c);
+                za[r++] = Clamp(xa[s++] * b + ya[t++] * c);
+                za[r++] = Clamp(xa[s++] * b + ya[t++] * c);
                 za[r++] = 255;
             }
         }
@@ -375,9 +376,9 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
             for (int i = 0; i < k; ++i, c += di)
             {
                 var b = 1.0f - c;
-                za[zi++] = (byte)(b * xa[xi++] + ya[yi++] * c);
-                za[zi++] = (byte)(b * xa[xi++] + ya[yi++] * c);
-                za[zi++] = (byte)(b * xa[xi++] + ya[yi++] * c);
+                za[zi++] = Clamp(b * xa[xi++] + ya[yi++] * c);
+                za[zi++] = Clamp(b * xa[xi++] + ya[yi++] * c);
+                za[zi++] = Clamp(b * xa[xi++] + ya[yi++] * c);
                 za[zi++] = 255; xi++; yi++;
             }
 
@@ -400,7 +401,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
         {
             if (Math.Abs(1.0f - scaling) < float.Epsilon * 10)
             {
-                return new Bitmap(image);
+                return image;
             }
 
             var (width, height) = (image.Width * scaling, image.Height * scaling);
@@ -432,6 +433,11 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
 
             image.UnlockBits(data);
             return tensor;
+        }
+
+        private static byte Clamp(float v)
+        {
+            return (byte)(v < 0 ? 0 : v > 255 ? 255 : v);
         }
     }
 }
