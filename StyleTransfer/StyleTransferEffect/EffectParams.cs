@@ -4,6 +4,7 @@
 namespace PaintDotNet.Effects.ML.StyleTransfer
 {
     using Microsoft.ML.OnnxRuntime.Tensors;
+    using PaintDotNet.Effects.ML.StyleTransfer.Color;
     using System;
     
     /// <summary>
@@ -26,57 +27,43 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
             StyleRatio = DEFAULT_STYLE_RATIO;
         }
 
-        /// <summary>
-        /// Get or set the targeted image style
-        /// </summary>
+        /// <inheritdoc/>
         public Tensor<float> Style
         {
             get => style;
             set { style = value; IsStyleVectorValid = false; }
         }
 
-        /// <summary>
-        /// Get or set the content image for identity transforms
-        /// (defaults to <see cref="Content"/> if not set)
-        /// </summary>
+        /// <inheritdoc/>
         public Tensor<float> ScaledContent
         {
             get => scaledContent ?? content;
             set { scaledContent = value; IsIdentityVectorValid = false; }
         }
 
-        /// <summary>
-        /// Get or set the content image
-        /// </summary>
+        /// <inheritdoc/>
         public Tensor<float> Content
         {
             get => content;
             set { content = value; IsIdentityVectorValid = false; }
         }
 
-        /// <summary>
-        /// Get or set the style ratio (i.e. effect strength) [0..1]
-        /// </summary>
+        /// <inheritdoc/>
         public float StyleRatio { get; set; }
 
-        /// <summary>
-        /// Get or set style compression time
-        /// </summary>
+        /// <inheritdoc/>
+        public IColorTransfer PostProcess { get; set; }
+
+        /// <inheritdoc/>
         public TimeSpan StyleTime { get; internal set; }
 
-        /// <summary>
-        /// Get or set identity compression time
-        /// </summary>
+        /// <inheritdoc/>
         public TimeSpan IdentityTime { get; internal set; }
 
-        /// <summary>
-        /// Get or set content transform time
-        /// </summary>
+        /// <inheritdoc/>
         public TimeSpan TransformTime { get; internal set; }
 
-        /// <summary>
-        /// Get or set total processing time
-        /// </summary>
+        /// <inheritdoc/>
         public TimeSpan TotalTime { get; internal set; }
 
         /// <summary>

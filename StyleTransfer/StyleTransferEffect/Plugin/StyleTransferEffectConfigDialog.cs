@@ -245,9 +245,9 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
                 entry.DisplayName = localized ?? entry.DisplayName;
             });
 
-            comboBoxColor.DataSource = list;
             comboBoxColor.DisplayMember = "DisplayName";
             comboBoxColor.ValueMember = "Name";
+            comboBoxColor.DataSource = list;
         }
 
         #region Event Handlers
@@ -420,6 +420,11 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
                     ? comboBoxPreset.SelectedIndex > 0
                     : pictureBoxStyle.Image != null;
             }
+        }
+
+        private void ComboBoxColorsSelectedIndexChanged(object sender, EventArgs e)
+        {
+            EffectToken.Properties.ColorTransfer = (string)comboBoxColor.SelectedValue;
         }
         #endregion
 

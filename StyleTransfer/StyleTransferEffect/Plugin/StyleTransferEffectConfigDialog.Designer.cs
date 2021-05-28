@@ -492,6 +492,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.comboBoxColor.Name = "comboBoxColor";
             this.comboBoxColor.Size = new System.Drawing.Size(280, 21);
             this.comboBoxColor.TabIndex = 0;
+            this.comboBoxColor.SelectedIndexChanged += new System.EventHandler(this.ComboBoxColorsSelectedIndexChanged);
             // 
             // StyleTransferEffectConfigDialog
             // 

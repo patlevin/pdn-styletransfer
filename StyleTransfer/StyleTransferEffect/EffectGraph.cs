@@ -34,6 +34,10 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
         /// </summary>
         TransformContent,
         /// <summary>
+        /// Perform post-processing
+        /// </summary>
+        PostProcess,
+        /// <summary>
         /// Effect processing finished
         /// </summary>
         Finished
@@ -126,7 +130,8 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
             UpdateIdentityTransform();
             GC.Collect();
             var styleInput = MergeVectors();
-            var result = TransformContent(styleInput);
+            var stylised = TransformContent(styleInput);
+            var result = PostProcess(stylised);
             GC.Collect();
             effectParams.TotalTime = sw.Elapsed;
 
@@ -239,6 +244,19 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
             {
                 return effectParams.StyleVector;
             }
+        }
+
+        private Tensor<float> PostProcess(Tensor<float> stylised)
+        {
+            if (effectParams.PostProcess != null)
+            {
+                var output = stylised.CloneEmpty();
+                Update?.Invoke(this, new EffectGraphEventArgs(GraphEvent.PostProcess));
+                _ = effectParams.PostProcess.TransferColor(effectParams.Content, stylised, output);
+                return output;
+            }
+
+            return stylised;
         }
 
         private void UpdateIdentityTransform()

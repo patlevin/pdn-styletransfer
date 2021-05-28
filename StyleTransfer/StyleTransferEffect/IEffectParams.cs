@@ -4,6 +4,7 @@
 namespace PaintDotNet.Effects.ML.StyleTransfer
 {
     using Microsoft.ML.OnnxRuntime.Tensors;
+    using PaintDotNet.Effects.ML.StyleTransfer.Color;
     using System;
 
     /// <summary>
@@ -31,6 +32,11 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
         /// Get or set the style ratio [0..1] (i.e. the effect strength)
         /// </summary>
         float StyleRatio { get; set; }
+
+        /// <summary>
+        /// Get or set optional post-processing step
+        /// </summary>
+        IColorTransfer PostProcess { get; set; }
 
         #region Performance Information
         /// <summary>

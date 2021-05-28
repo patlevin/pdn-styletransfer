@@ -3,11 +3,12 @@
 
 namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
 {
+    using PaintDotNet.Effects.ML.StyleTransfer.Color;
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Drawing;
     using System.Globalization;
+    using System.Linq;
     using System.Windows.Forms;
 
     /// <summary>
@@ -189,6 +190,11 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
                     ? ModelData.StyleFast : ModelData.StyleQuality);
                 graph.Transformer.Load(properties.TransformerModel == ModelType.Fast
                     ? ModelData.TransformerFast : ModelData.TransformerQuality);
+
+                graph.Params.PostProcess = TransferMethods
+                    .All
+                    .Where(desc => desc.Name == properties.ColorTransfer)
+                    .Select(desc => desc.Interface).FirstOrDefault();
 
                 if (mustCallOnRender)
                 {
