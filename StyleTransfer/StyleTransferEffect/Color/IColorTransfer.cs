@@ -1,47 +1,10 @@
 ﻿// SPDX-License-Identifier: MIT
 // Copyright © 2020 Patrick Levin
 
+using Microsoft.ML.OnnxRuntime.Tensors;
+
 namespace PaintDotNet.Effects.ML.StyleTransfer.Color
 {
-    /// <summary>
-    /// Image data for colour transfer
-    /// </summary>
-    public struct ImageData
-    {
-        /// <summary>
-        /// Pixel data in interlaced ARGB format
-        /// </summary>
-        public byte[] Data;
-
-        /// <summary>
-        /// Image width in pixels
-        /// </summary>
-        public int Width;
-
-        /// <summary>
-        /// Image height in pixels
-        /// </summary>
-        public int Height;
-
-        /// <summary>
-        /// Return whether the image data is valid
-        /// </summary>
-        public bool IsValid
-            => Width > 0 && Height > 0 && Data.Length >= Width * Height * 4;
-
-        /// <summary>
-        /// Return whether this data is compatible with other image data
-        /// </summary>
-        /// <param name="other">Image data to test for compatibility</param>
-        /// <returns><c>true</c>, iff both are valid and of the same size</returns>
-        public bool IsCompatibleWith(ImageData other)
-        {
-            return IsValid && other.IsValid &&
-                   Width == other.Width &&
-                   Height == other.Height;
-        }
-    }
-
     /// <summary>
     /// Interface for colour transfer methods.
     /// </summary>
@@ -64,10 +27,10 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Color
         /// colour channels are processed. The input images will only be
         /// read and stay unmodified.
         /// </remarks>
-        /// <param name="source">Source image data</param>
-        /// <param name="target">Target image data</param>
-        /// <param name="output">Output image data, must be compatible with target</param>
+        /// <param name="source">Source tensor (normalised RGB, NHWC-format)</param>
+        /// <param name="target">Target tensor (normalised RGB, NHWC-format)</param>
+        /// <param name="output">Output tensor, must be compatible with target</param>
         /// <returns><c>true</c>, iff the colour transfer was successfull</returns>
-        bool TransferColor(ImageData source, ImageData target, ImageData output);
+        bool TransferColor(Tensor<float> source, Tensor<float> target, Tensor<float> output);
     }
 }

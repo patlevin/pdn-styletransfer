@@ -1,5 +1,6 @@
 ﻿// SPDX-License-Identifier: MIT
 // Copyright © 2020 Patrick Levin
+using Microsoft.ML.OnnxRuntime.Tensors;
 using PaintDotNet.Effects.ML.StyleTransfer.Maths;
 
 namespace PaintDotNet.Effects.ML.StyleTransfer.Color
@@ -10,19 +11,19 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Color
     public abstract class LinearTransfer : ColorTransfer
     {
         /// <inheritdoc/>
-        protected sealed override bool DoTransferColor(ImageData source, ImageData target, ImageData output)
+        protected sealed override bool DoTransferColor(Tensor<float> source, Tensor<float> target, Tensor<float> output)
         {
-            var sourceMean = PixelOps.Mean(source.Data);
-            var targetMean = PixelOps.Mean(target.Data);
+            var sourceMean = PixelOps.Mean(source);
+            var targetMean = PixelOps.Mean(target);
 
-            var sourceSigma = PixelOps.Covariance(source.Data, sourceMean);
-            var targetSigma = PixelOps.Covariance(target.Data, targetMean);
+            var sourceSigma = PixelOps.Covariance(source, sourceMean);
+            var targetSigma = PixelOps.Covariance(target, targetMean);
 
             if (GetCoefficients(sourceSigma, targetSigma, out Matrix3 A))
             {
                 var b = Vector3.Zero;
                 _ = sourceMean.Sub(A._ * targetMean, ref b);
-                PixelOps.LinearTransfer(A, b, target.Data, output.Data);
+                PixelOps.LinearTransfer(A, b, target, output);
                 return true;
             }
 

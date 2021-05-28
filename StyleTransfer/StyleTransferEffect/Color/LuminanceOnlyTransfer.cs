@@ -1,6 +1,9 @@
 ﻿// SPDX-License-Identifier: MIT
 // Copyright © 2020 Patrick Levin
 
+using Microsoft.ML.OnnxRuntime.Tensors;
+using System.Threading.Tasks;
+
 namespace PaintDotNet.Effects.ML.StyleTransfer.Color
 {
     [TransferMethod(
@@ -9,26 +12,29 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Color
     public sealed class LuminanceOnlyTransfer : ColorTransfer
     {
         /// <inheritdoc/>
-        protected override bool DoTransferColor(ImageData source, ImageData target, ImageData output)
+        protected override bool DoTransferColor(Tensor<float> source, Tensor<float> target, Tensor<float> output)
         {
-            var sampler = new Sampler(source);
 
-            var targetData = target.Data;
-            var outputData = output.Data;
-            var fY = 1f / target.Height;
-            var fX = 1f / target.Width;
+            var (width, height) = (target.Width(), target.Height());
+            var fY = 1f / height;
+            var fX = 1f / width;
 
-            for (int row = 0, height = target.Height, k = 0; row < height; ++row)
+            Parallel.For(0, height, row =>
             {
-                for (int col = 0, width = target.Width; col < width; ++col, k += 4)
+                var sampler = new Sampler<float>(source);
+
+                var targetData = ((DenseTensor<float>)target).Buffer.Span;
+                var outputData = ((DenseTensor<float>)output).Buffer.Span;
+                var k = row * width * 3;
+                var yPos = fY * row;
+                for (int col = 0; col < width; ++col, k += 3)
                 {
-                    var (r, g, b) = sampler[fX * col, fY * row];
-                    PixelOps.RgbToYuv(r, g, b, out float _, out float u, out float v);
+                    var (r, g, b) = sampler[fX * col, yPos];
+                    var (_, u, v) = PixelOps.RgbToYuv(r, g, b);
                     var y = PixelOps.Luma(targetData, k);
                     PixelOps.YuvToRgb(y, u, v, outputData, k);
-                    outputData[k + 3] = targetData[k + 3];
                 }
-            }
+            });
 
             return true;
         }

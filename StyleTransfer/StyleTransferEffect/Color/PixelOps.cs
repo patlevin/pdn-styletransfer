@@ -1,7 +1,10 @@
 ﻿// SPDX-License-Identifier: MIT
 // Copyright © 2020 Patrick Levin
 using System;
+using System.Threading.Tasks;
+using Microsoft.ML.OnnxRuntime.Tensors;
 using PaintDotNet.Effects.ML.StyleTransfer.Maths;
+using Vec3 = System.ValueTuple<float, float, float>;
 
 namespace PaintDotNet.Effects.ML.StyleTransfer.Color
 {
@@ -13,180 +16,219 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Color
         /// <summary>
         /// Return the mean colour vector of an image
         /// </summary>
-        /// <param name="pixelDataArgb">ARGB image data</param>
+        /// <param name="tensor">Normalised RGB image tensor</param>
         /// <returns>Mean colour vector</returns>
-        public static IVector3 Mean(byte[] pixelDataArgb)
+        public static IVector3 Mean(Tensor<float> tensor)
         {
-            var r = 0;
-            var g = 0;
-            var b = 0;
+            var granularity = tensor.Dimensions[3];
+            var total = (int)tensor.Length;
+            var (m1, m2, m3) = Aggregate(total, granularity, (0f, 0f, 0f), Sum, Merge);
+            var s = 1f / (tensor.Width() * tensor.Height());
+            return new Vector3(m1 * s, m2 * s, m3 * s);
 
-            for (int i = 0; i < pixelDataArgb.Length; i += 4)
+            Vec3 Sum(int start, int end)
             {
-                b += pixelDataArgb[i + 0];
-                g += pixelDataArgb[i + 1];
-                r += pixelDataArgb[i + 2];
+                var (s1, s2, s3) = (0f, 0f, 0f);
+                var data = ((DenseTensor<float>)tensor).Buffer.Span;
+                for (int i = start; i < end; i += 3)
+                {
+                    s1 += data[i + 0];
+                    s2 += data[i + 1];
+                    s3 += data[i + 2];
+                }
+                return (s1, s2, s3);
             }
 
-            var oneOverN = 1f / (pixelDataArgb.Length / 4);
-            return new Vector3(b * oneOverN, g * oneOverN, r * oneOverN);
+            Vec3 Merge(Vec3 accumulate, Vec3 current)
+            {
+                return (accumulate.Item1 + current.Item1,
+                        accumulate.Item2 + current.Item2,
+                        accumulate.Item3 + current.Item3);
+            }
         }
 
         /// <summary>
         /// Return the standard deviation of an image.
         /// </summary>
-        /// <param name="pixelDataArgb">Image data in ARGB format</param>
+        /// <param name="tensor">RGB image tensor in NHWC-format</param>
         /// <param name="mean">Mean image colour</param>
         /// <returns>Vector containing the standard deviation of the image</returns>
-        public static IVector3 StdDev(byte[] pixelDataArgb, IVector3 mean)
+        public static IVector3 StdDev(Tensor<float> tensor, IVector3 mean)
         {
-            var v1 = 0f;
-            var v2 = 0f;
-            var v3 = 0f;
-            var (m1, m2, m3) = mean;
+            var total = (int)tensor.Length;
+            var granularity = tensor.Dimensions[3];
+            var (s1, s2, s3) = Aggregate(total, granularity, (0f, 0f, 0f), Sum, Merge);
 
-            for (int i = 0; i < pixelDataArgb.Length; i += 4)
+            var s = 1f / (tensor.Width() * tensor.Height());
+            return new Vector3(
+                (float)Math.Sqrt(s1 * s),
+                (float)Math.Sqrt(s2 * s),
+                (float)Math.Sqrt(s3 * s));
+
+            Vec3 Sum(int start, int end)
             {
-                v1 += (pixelDataArgb[i + 0] - m1).Sqr();
-                v2 += (pixelDataArgb[i + 1] - m2).Sqr();
-                v3 += (pixelDataArgb[i + 2] - m3).Sqr();
+                var (m1, m2, m3) = mean;
+                var (v1, v2, v3) = (0f, 0f, 0f);
+
+                for (int i = start; i < end; i += 3)
+                {
+                    v1 += (tensor[i + 0] - m1).Sqr();
+                    v2 += (tensor[i + 1] - m2).Sqr();
+                    v3 += (tensor[i + 2] - m3).Sqr();
+                }
+
+                return (v1, v2, v3);
             }
 
-            var oneOverN = 1f / (pixelDataArgb.Length / 4);
-            return new Vector3(
-                (float)Math.Sqrt(v1 * oneOverN),
-                (float)Math.Sqrt(v2 * oneOverN),
-                (float)Math.Sqrt(v3 * oneOverN));
+            Vec3 Merge(Vec3 agg, Vec3 cur)
+            {
+                return (agg.Item1 + cur.Item1,
+                        agg.Item2 + cur.Item2,
+                        agg.Item3 + cur.Item3);
+            }
         }
 
         /// <summary>
         /// Return the covariance matrix of an image
         /// </summary>
-        /// <param name="pixelDataArgb">Image data as ARGB</param>
+        /// <param name="tensor">Image tensor (normalised RGB, NHWC format)</param>
         /// <param name="mean">Mean image colour</param>
         /// <returns>Covariance matrix of the image</returns>
-        public static Matrix3 Covariance(byte[] pixelDataArgb, IVector3 mean)
+        public static Matrix3 Covariance(Tensor<float> tensor, IVector3 mean)
         {
-            Matrix3 cov = Matrix3.Zero;
-            Matrix3 tmp = Matrix3.Zero;
-            var v = Vector3.Zero;
-            var t = Vector3.Zero;
+            var granularity = tensor.Dimensions[3];
+            var total = (int)tensor.Length;
+            var cov = Aggregate(total, granularity, Matrix3.Zero, Sum, Merge);
+            return cov._ / (tensor.Width() * tensor.Height());
 
-            for (int i = 0; i < pixelDataArgb.Length; i += 4)
+            Matrix3 Sum(int start, int end)
             {
-                v.CopyFrom(pixelDataArgb, i);
-                cov.Add(tmp.FromVector(v.Sub(mean, ref t)), ref cov);
+                var agg = Matrix3.Zero;
+                var tmp = Matrix3.Zero;
+                var (m1, m2, m3) = mean;
+                var data = ((DenseTensor<float>)tensor).Buffer.Span;
+
+                for (int i = start; i < end; i += 3)
+                {
+                    tmp.FromVector(data[i + 0] - m1, data[i + 1] - m2, data[i + 2] - m3);
+                    agg.Add(tmp, agg);
+                }
+
+                return agg;
             }
 
-            return cov._ / (pixelDataArgb.Length / 4);
+            Matrix3 Merge(Matrix3 acc, Matrix3 cur)
+            {
+                return acc.Add(cur, acc);
+            }
         }
 
         /// <summary>
         /// Perform a linear colour transfer operation.
         /// </summary>
-        /// <param name="A">Colour transfer matrix</param>
+        /// <param name="A">Coefficient matrix</param>
         /// <param name="b">Colour offset</param>
         /// <param name="input">Input image data in ARGB format</param>
         /// <param name="output">Output image data in ARGB format</param>
-        public static void LinearTransfer(Matrix3 A, IVector3 b, byte[] input, byte[] output)
+        public static void LinearTransfer(Matrix3 A, IVector3 b, Tensor<float> input, Tensor<float> output)
         {
-            var x = Vector3.Zero;
-            var ax = Vector3.Zero;
-
-            for (int i = 0; i < input.Length; i += 4)
+            var stride = input.Strides[1];
+            Parallel.For(0, input.Height(), row =>
             {
-                x.CopyFrom(input, i);
-                _ = A.Mul(x, ref ax);
-                _ = ax.Add(b, ref x);
-                x.CopyTo(output, i);
-            }
+                var source = ((DenseTensor<float>)input).Buffer.Span;
+                var destination = ((DenseTensor<float>)output).Buffer.Span;
+                var (b1, b2, b3) = b;
+                var (start, end) = (row * stride, (row + 1) * stride);
+
+                for (int i = start; i < end; i += 3)
+                {
+                    var (x1, x2, x3) = A.Mul(source[i + 0], source[i + 1], source[i + 2]);
+                    destination[i + 0] = b1 + x1;
+                    destination[i + 1] = b2 + x2;
+                    destination[i + 2] = b3 + x3;
+                }
+            });
         }
 
         /// <summary>
         /// Return the luminosity (as per Y'UV standard) of a colour.
         /// </summary>
-        /// <param name="r">Red component</param>
-        /// <param name="g">Green component</param>
-        /// <param name="b">Blue component</param>
-        /// <returns>Unscaled luminosity of the colour</returns>
-        public static float Luma(byte r, byte g, byte b)
-        {
-            return r * 0.299f + g * 0.587f + b * 0.114f;
-        }
-
-        /// <summary>
-        /// Return the luminosity (as per Y'UV standard) of a colour.
-        /// </summary>
-        /// <param name="data">Source pixels in interlaced ARGB format</param>
+        /// <param name="data">Source pixels in interlaced RGB format</param>
         /// <param name="offset">Offset of the blue-component (i.e. pixel offset)</param>
-        /// <returns>Unscaled luminosity of the colour</returns>
-        public static float Luma(byte[] data, int offset)
+        /// <returns>Luminosity (Y-signal) of the colour</returns>
+        public static float Luma(Span<float> data, int offset)
         {
-            return data[offset + 2] * 0.299f +
+            return data[offset + 0] * 0.299f +
                    data[offset + 1] * 0.587f +
-                   data[offset + 0] * 0.114f;
+                   data[offset + 2] * 0.114f;
         }
 
         /// <summary>
         /// Convert RGB to unscaled Y'UV
         /// </summary>
-        /// <param name="r">Red component [0..255]</param>
-        /// <param name="g">Green component [0..255]</param>
-        /// <param name="b">Blue component [0..255]</param>
-        /// <param name="y">Luminosity [0..255]</param>
-        /// <param name="u">U (actually: Cb) component</param>
-        /// <param name="v">V (actually: Cr) component</param>
-        public static void RgbToYuv(byte r, byte g, byte b, out float y, out float u, out float v)
+        /// <param name="r">Red component [0..1]</param>
+        /// <param name="g">Green component [0..1]</param>
+        /// <param name="b">Blue component [0..1]</param>
+        /// <returns>Tuple of (Y, U, V) components (technically Y Cb Cr)</returns>
+        public static (float, float, float) RgbToYuv(float r, float g, float b)
         {
-            y = r * 0.299f + g * 0.587f + b * 0.114f;
-            u = 0.493f * (b - y);
-            v = 0.877f * (r - y);
+            var y = r * 0.299f + g * 0.587f + b * 0.114f;
+            return (y, 0.493f * (b - y), 0.877f * (r - y));
         }
 
         /// <summary>
-        /// Convert unscaled Y'UV to 8-bit RGB.
+        /// Convert Y'UV to RGB.
         /// </summary>
-        /// <param name="y">Luminosity [0..255]</param>
+        /// <param name="y">Luminosity (Y-signal)</param>
         /// <param name="u">U (actually: Cb) component</param>
         /// <param name="v">V (actually: Cr) component</param>
-        /// <param name="r">Red component [0..255]</param>
-        /// <param name="g">Green component [0..255]</param>
-        /// <param name="b">Blue component [0..255]</param>
-        public static void YuvToRgb(float y, float u, float v, out byte r, out byte g, out byte b)
+        /// <param name="destination">Target for storing RGB result</param>
+        /// <param name="offset">Target offset (e.g. index of the red component)</param>
+        public static void YuvToRgb(float y, float u, float v, Span<float> destination, int offset)
         {
-            var ri = (int)Math.Round(y + 1 / 0.877f * v);
-            var gi = (int)Math.Round(y - 0.144f / (0.587f * 0.493f) * u - 0.299f / (0.587f * 0.877f) * v);
-            var bi = (int)Math.Round(y + 1 / 0.493f * u);
+            destination[offset + 0] = Clamp(y + 1 / 0.877f * v);
+            destination[offset + 1] = Clamp(y - 0.144f / (0.587f * 0.493f) * u - 0.299f / (0.587f * 0.877f) * v);
+            destination[offset + 2] = Clamp(y + 1 / 0.493f * u);
 
-            r = (byte)(ri < 0 ? 0 : ri > 255 ? 255 : ri);
-            g = (byte)(gi < 0 ? 0 : gi > 255 ? 255 : gi);
-            b = (byte)(bi < 0 ? 0 : bi > 255 ? 255 : bi);
+            float Clamp(float value) => value < 0 ? 0 : value > 1 ? 1 : value; 
         }
 
         /// <summary>
-        /// Convert 8-bit RGB to unscaled Y'UV 
+        /// Aggregate values (of a tensor) in parallel.
         /// </summary>
-        /// <param name="data">Source pixels in interlaced ARGB format</param>
-        /// <param name="offset">Offset of the blue-component (i.e. pixel offset)</param>
-        /// <param name="y">Luminosity [0..255]</param>
-        /// <param name="u">U (actually: Cb) component</param>
-        /// <param name="v">V (actually: Cr) component</param>
-        public static void RgbToYuv(byte[] data, int offset, out float y, out float u, out float v)
+        /// <typeparam name="T">Type of the aggregate value</typeparam>
+        /// <param name="total">Total number of (tensor-) elements</param>
+        /// <param name="granularity">Number of channels (in the tensor)</param>
+        /// <param name="init">Initial value</param>
+        /// <param name="sum">
+        /// Function that returns the sums of a slice of data.
+        /// The arguments arethe first (inclusive) and last (exclusive) element
+        /// index. Actual data must be passed via captures. Indexes are guaranteed
+        /// to not overlap so access within these boundaries is thread-safe.
+        /// </param>
+        /// <param name="merge">Function that combines two sums and returns a total</param>
+        /// <returns>Total aggregate over all elements</returns>
+        public static T Aggregate<T>(int total, int granularity, T init, Func<int, int, T> sum, Func<T, T, T> merge)
         {
-            RgbToYuv(data[offset + 2], data[offset + 1], data[offset + 0], out y, out u, out v);
-        }
+            var numCpus = Environment.ProcessorCount;
+            var blockSize = (total / (granularity * numCpus)) * granularity;
+            var blockCount = total / blockSize + ((total % blockSize) > 0 ? 1 : 0);
+            var _lock = new object();
+            T result = init;
 
-        /// <summary>
-        /// Convert unscaled Y'UV to 8-bit RGB
-        /// </summary>
-        /// <param name="y">Luminosity [0..255]</param>
-        /// <param name="u">U (actually: Cb) component</param>
-        /// <param name="v">V (actually: Cr) component</param>
-        /// <param name="data">Source pixels in interlaced ARGB format</param>
-        /// <param name="offset">Offset of the blue-component (i.e. pixel offset)</param>
-        public static void YuvToRgb(float y, float u, float v, byte[] data, int offset)
-        {
-            YuvToRgb(y, u, v, out data[offset + 2], out data[offset + 1], out data[offset + 0]);
+            Parallel.For(0, blockCount, block =>
+            {
+                var start = block * blockSize;
+                var end = Math.Min(start + blockSize, total);
+                var agg = sum(start, end);
+
+                lock (_lock)
+                {
+                    result = merge(result, agg);
+                }
+            });
+
+            return result;
         }
     }
 }

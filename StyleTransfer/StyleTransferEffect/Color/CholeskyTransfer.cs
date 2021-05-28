@@ -35,19 +35,16 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Color
         {
             A = Matrix3.Zero;
 
-            var sourceL = Matrix3.Zero;
-            if (!LinAlg.Cholesky(sourceSigma, ref sourceL))
+            if (!LinAlg.Cholesky(sourceSigma, out Matrix3 sourceL))
                 return false;
 
-            var targetL = Matrix3.Zero;
-            if (!LinAlg.Cholesky(targetSigma, ref targetL))
+            if (!LinAlg.Cholesky(targetSigma, out Matrix3 targetL))
                 return false;
 
-            var targetLI = Matrix3.Zero;
-            if (!LinAlg.Invert(targetL, ref targetLI))
+            if (!LinAlg.Invert(targetL, out Matrix3 targetI))
                 return false;
 
-            A = sourceL._ * targetLI;
+            A = sourceL._ * targetI;
             return true;
         }
     }

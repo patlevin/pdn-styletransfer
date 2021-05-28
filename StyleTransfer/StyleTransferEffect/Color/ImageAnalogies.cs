@@ -23,8 +23,8 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Color
     /// source and target image respectively. The square root of the matrixes
     /// is calculated using the eigenvalue decomposition:
     /// 
-    /// Σ = V•λ•V<sup>-1</sup>, where V is an eigenspace and λ is a diagonal
-    /// matrix containing the eigenvalues of Σ.
+    /// Σ = V•λ•V<sup>-1</sup>, where V contains eigenvectors and λ is a
+    /// diagonal matrix containing the eigenvalues of Σ.
     /// 
     /// Any algebraic function, can then be performed on the elements of the
     /// main diagonal λ and we define f(Σ) = V•f(λ)•V<sup>-1</sup>.
@@ -42,25 +42,23 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Color
     public sealed class ImageAnalogies : LinearTransfer
     {
         /// <inheritdoc/>
-        protected override bool GetCoefficients(Matrix3 sourceSigma, Matrix3 targetSigma, out Matrix3 A)
+        protected override bool GetCoefficients(Matrix3 sourceSigma, Matrix3 targetSigma, out Matrix3 C)
         {
-            A = Matrix3.Zero;
-            var sourceSqrtSigma = Matrix3.Zero;
-            var success = LinAlg.ApplyFunction(sourceSigma,
-                                               x => (float)Math.Sqrt(Math.Abs(x)),
-                                               ref sourceSqrtSigma);
+            C = Matrix3.Zero;
+            var success = LinAlg.ApplyFunction(sourceSigma, Sqrt, out Matrix3 A);
             if (!success)
                 return false;
 
-            var targetSqrtSigma = Matrix3.Zero;
-            success = LinAlg.ApplyFunction(targetSigma,
-                                           x => 1 / (float)Math.Sqrt(Math.Abs(x)),
-                                           ref targetSqrtSigma);
+            success = LinAlg.ApplyFunction(targetSigma, InvSqrt, out Matrix3 B);
             if (!success)
                 return false;
 
-            A = sourceSqrtSigma._ * targetSqrtSigma;
+            C = A._ * B;
             return true;
+
+            float Sqrt(float x) => (float)Math.Sqrt(Math.Abs(x));
+
+            float InvSqrt(float x) => 1f / (float)Math.Sqrt(Math.Abs(x));
         }
     }
 }
