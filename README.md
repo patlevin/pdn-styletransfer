@@ -71,7 +71,7 @@ The selected style image also affects the results (duh!), but not necessarily in
 
 Another factor is the amount of information that can be captures during style extraction. The model uses a 100-element style vector and trying to capture the essence of a mega-pixel artwork in just 100 numbers is... challenging, to say the least.
 
-This is also where the styleimage size setting comes into play. Selecting a smaller value will remove details and focus on "the big picture", while values that are too big might simply fail to capture any meanful data during the style extraction process.
+This is also where the styleimage size setting comes into play. Selecting a smaller value will remove details and focus on "the big picture", while values that are too big might simply fail to capture any meaningful data during the style extraction process.
 
 ## Building from source
 
