@@ -3,6 +3,18 @@ using PaintDotNet.Effects.ML.StyleTransfer.Maths;
 
 namespace PaintDotNet.Effects.ML.StyleTransfer.Test
 {
+    public static class Ext
+    {
+        public static Matrix3 T(this Matrix3 A)
+        {
+            var C = Matrix3.Zero;
+            C.Row(0).Copy(A.Column(0));
+            C.Row(1).Copy(A.Column(1));
+            C.Row(2).Copy(A.Column(2));
+            return C;
+        }
+    }
+
     [TestClass]
     public class LinAlgTests
     {
@@ -12,10 +24,9 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Test
             var A = new Matrix3(new float[] { 25, 15, -5, 15, 18, 0, -5, 0, 11 });
             var L = new Matrix3(new float[] { 5, 0, 0, 3, 3, 0, -1, 1, 3 });
 
-            var result = Matrix3.Zero;
-            Assert.IsTrue(LinAlg.Cholesky(A, ref result));
-            Assert.AreEqual(L, result);
-            Assert.AreEqual(A, result._ * result.T);
+            Assert.IsTrue(LinAlg.Cholesky(A, out Matrix3 C));
+            Assert.AreEqual(L, C);
+            Assert.AreEqual(A, C._ * C.T());
         }
 
         [TestMethod("Cholesky decomposition returns false if matrix isn't positive definite")]
@@ -23,8 +34,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Test
         {
             var A = new Matrix3(new float[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
 
-            var result = Matrix3.Zero;
-            Assert.IsFalse(LinAlg.Cholesky(A, ref result));
+            Assert.IsFalse(LinAlg.Cholesky(A, out Matrix3 C));
         }
 
         [TestMethod("Det returns matrix determinant |M|")]
@@ -41,9 +51,8 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Test
             var A = new Matrix3(new float[] { 2, 1, 0, 0, 2, 0, 2, 0, 1 });
             var Ai = new Matrix3(new float[] { 0.5f, -0.25f, 0, 0, 0.5f, 0, -1, 0.5f, 1 });
 
-            var result = Matrix3.Zero;
-            Assert.IsTrue(LinAlg.Invert(A, ref result));
-            Assert.AreEqual(Ai, result);
+            Assert.IsTrue(LinAlg.Invert(A, out Matrix3 I));
+            Assert.AreEqual(Ai, I);
         }
 
 
@@ -52,9 +61,8 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Test
         {
             var A = new Matrix3(new float[] { 2, 1, 0, 0, 2, 0, 4, 2, 0 });
 
-            var result = Matrix3.Zero;
-            Assert.IsFalse(LinAlg.Invert(Matrix3.Zero, ref result));
-            Assert.IsFalse(LinAlg.Invert(A, ref result));
+            Assert.IsFalse(LinAlg.Invert(Matrix3.Zero, out Matrix3 I1));
+            Assert.IsFalse(LinAlg.Invert(A, out Matrix3 I2));
         }
 
         [TestMethod("Poly returns the last three coefficients of the characteristical polynome")]
@@ -71,7 +79,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Test
             var root = LinAlg.SolveCubic(-1, -6, 0);
 
             Assert.AreEqual(3, root.Length);
-            Assert.AreEqual(new Vector3(-2, 3, 0), new Vector3(root));
+            Assert.AreEqual((-2, 3, 0), (root[0], root[1], root[2]));
         }
 
         [TestMethod("Eigenvalues returns eigenvalues of a matrix")]
@@ -153,18 +161,17 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Test
         public void TestApplyFunction()
         {
             var A = new Matrix3(new float[] { 5, -10, -5, 2, 14, 2, -4, -8, 6 });
-            var Expected = new Matrix3(new float[]
+            var E = new Matrix3(new float[]
             {
                 3125, -193750, -96875,
                 38750, 177500, 38750,
                 -77500, -155000, 22500
             });
 
-            var actual = Matrix3.Zero;
-            var success = LinAlg.ApplyFunction(A, x => (float)System.Math.Pow(x, 5), ref actual);
+            var success = LinAlg.ApplyFunction(A, x => (float)System.Math.Pow(x, 5), out Matrix3 C);
 
             Assert.IsTrue(success);
-            Assert.IsTrue(Expected.Equals(actual, MathF.RelativeComparer(0.00001f)));
+            Assert.IsTrue(E.Equals(C, MathF.RelativeComparer(0.00001f)));
         }
     }
 }

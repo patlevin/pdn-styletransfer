@@ -48,19 +48,6 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
         }
 
         /// <summary>
-        /// Set contents.
-        /// </summary>
-        /// <param name="x">First element</param>
-        /// <param name="y">Second element</param>
-        /// <param name="z">Third element</param>
-        public void Set(float x, float y, float z)
-        {
-            d[0] = x;
-            d[1] = y;
-            d[2] = z;
-        }
-
-        /// <summary>
         /// Test another object for equality.
         /// </summary>
         /// <param name="other">Other object to test for equality</param>
@@ -84,7 +71,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
         /// <returns>Hash code of the vector</returns>
         public int GetHashCode(IEqualityComparer comparer)
         {
-            return Hashes.Simple(
+            return Hashes.Default(
                 comparer.GetHashCode(this[0]),
                 comparer.GetHashCode(this[1]),
                 comparer.GetHashCode(this[2]));
@@ -116,7 +103,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
         /// <returns>Hash code of the vector elements</returns>
         public override int GetHashCode()
         {
-            return Hashes.Simple(
+            return Hashes.Default(
                 d[0].GetHashCode(),
                 d[1].GetHashCode(),
                 d[2].GetHashCode());

@@ -30,49 +30,31 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
         public static Matrix3 Zero => new Matrix3(new float[N * N]);
 
         /// <summary>
-        /// Unit matrix (1)
-        /// </summary>
-        public static Matrix3 Unit => Diag(1);
-
-        /// <summary>
         /// Return a diagonal matrix from a scalar
         /// </summary>
-        /// <param name="s">Value of each diagonal element</param>
-        /// <returns>Diagonal matrix of (x..x..x)</returns>
-        public static Matrix3 Diag(float s)
+        /// <param name="d">Value of each diagonal element</param>
+        /// <returns>Diagonal matrix of (d..d..d)</returns>
+        public static Matrix3 Diag(float d)
         {
-            return new Matrix3(new float[] { s, 0, 0, 0, s, 0, 0, 0, s });
+            return Diag(d, d, d);
         }
 
         /// <summary>
         /// Return a diagonal matrix from a vector
         /// </summary>
-        /// <param name="v">Vector that represent the main diagonal.</param>
-        /// <returns>Diagonal matrix of (v1..v2..v3)</returns>
-        public static Matrix3 Diag(IVector3 v)
+        /// <param name="d1">Element at M[0, 0]</param>
+        /// <param name="d2">Element at M[1, 1]</param>
+        /// <param name="d3">Element at M[2, 2]</param>
+        /// <returns>Diagonal matrix of (d1..d2..d3)</returns>
+        public static Matrix3 Diag(float d1, float d2, float d3)
         {
-            return new Matrix3(new float[] { v[0], 0, 0, 0, v[1], 0, 0, 0, v[2] });
+            return new Matrix3(new float[] { d1, 0, 0, 0, d2, 0, 0, 0, d3 });
         }
 
         /// <summary>
         /// Trace of the matrix (sum of diagonal elements)
         /// </summary>
         public float Trace => m[0] + m[4] + m[8];
-
-        /// <summary>
-        /// Return the transposed matrix
-        /// </summary>
-        public Matrix3 T
-        {
-            get
-            {
-                var M = Zero;
-                M.Column(0).Copy(Row(0));
-                M.Column(1).Copy(Row(1));
-                M.Column(2).Copy(Row(2));
-                return M;
-            }
-        }
 
         /// <summary>
         /// Return a wrapper for supporting operator overloading
@@ -142,18 +124,6 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
             return new Vector3Ref(m, i, N);
         }
 
-        /// <summary>
-        /// Set all elements to a given value
-        /// </summary>
-        /// <param name="x">Value to set the elements to</param>
-        public void SetAll(float x)
-        {
-            for (int i = 0; i < N * N; ++i)
-            {
-                m[i] = x;
-            }
-        }
-
         public override bool Equals(object obj)
         {
             if (!(obj is Matrix3))
@@ -180,7 +150,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
 
         public override int GetHashCode()
         {
-            return Hashes.Simple(
+            return Hashes.Default(
                 this[0].GetHashCode(),
                 this[1].GetHashCode(),
                 this[2].GetHashCode());
@@ -188,7 +158,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
 
         public int GetHashCode(IEqualityComparer comparer)
         {
-            return Hashes.Simple(
+            return Hashes.Default(
                 this[0].GetHashCode(comparer),
                 this[1].GetHashCode(comparer),
                 this[2].GetHashCode(comparer));

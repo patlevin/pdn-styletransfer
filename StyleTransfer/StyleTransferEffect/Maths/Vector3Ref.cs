@@ -54,7 +54,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
         /// <returns>Hash code of the vector</returns>
         public int GetHashCode(IEqualityComparer comparer)
         {
-            return Hashes.Simple(
+            return Hashes.Default(
                 comparer.GetHashCode(this[0]),
                 comparer.GetHashCode(this[1]),
                 comparer.GetHashCode(this[2]));
@@ -86,7 +86,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
         /// <returns>Hash code of the vector elements</returns>
         public override int GetHashCode()
         {
-            return Hashes.Simple(
+            return Hashes.Default(
                 this[0].GetHashCode(),
                 this[1].GetHashCode(),
                 this[2].GetHashCode());

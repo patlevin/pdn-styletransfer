@@ -21,7 +21,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Test
             var expected = new Matrix3(
                 new float[] { 1, 0, 0, 0, 2, 0, 0, 0, 3 });
 
-            Assert.AreEqual(expected, Matrix3.Diag(new Vector3(1, 2, 3)));
+            Assert.AreEqual(expected, Matrix3.Diag(1, 2, 3));
         }
 
         [TestMethod("Indexing individual elements returns the correct value")]
@@ -108,18 +108,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Test
             var M = new Matrix3(new float[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
             var Transposed = new Matrix3(new float[] { 1, 4, 7, 2, 5, 8, 3, 6, 9 });
 
-            Assert.AreEqual(Transposed, M.T);
-        }
-
-        [TestMethod("SetAll sets all matrix elements to given value")]
-        public void TestSetAll()
-        {
-            var M = new Matrix3(new float[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
-
-            M.SetAll(216);
-            for (int i = 0; i < Matrix3.N; ++i)
-                for (int j = 0; j < Matrix3.N; ++j)
-                    Assert.AreEqual(216, M[i, j]);
+            Assert.AreEqual(Transposed, M.T());
         }
     }
 }

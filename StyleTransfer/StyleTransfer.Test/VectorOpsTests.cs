@@ -44,18 +44,6 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Test
             Assert.AreEqual(x, y);
         }
 
-        [TestMethod("Add sets result vector to element-wise sum of arguments")]
-        public void TestAdd()
-        {
-            var a = new Vector3(1, 2, 3);
-            var b = new Vector3(3, 4, 5);
-            var c = Vector3.Zero;
-
-            _ = a.Add(b, ref c);
-
-            Assert.AreEqual(new Vector3(4, 6, 8), c);
-        }
-
         [TestMethod("Sub sets result vector to element-wise difference of arguments")]
         public void TestSub()
         {
@@ -102,18 +90,6 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Test
             var dot = a.Dot(b);
 
             Assert.AreEqual(AdotB, dot);
-        }
-
-        [TestMethod("Cross result vector to outer product of arguments")]
-        public void TestCross()
-        {
-            var a = new Vector3(1, 0, 0);
-            var b = new Vector3(0, 0, 1);
-            var c = Vector3.Zero;
-
-            _ = a.Cross(b, ref c);
-
-            Assert.AreEqual(new Vector3(0, -1, 0), c);
         }
 
         [TestMethod("Magnitude returns Sqrt(v.v)")]

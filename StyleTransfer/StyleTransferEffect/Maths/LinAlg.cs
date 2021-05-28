@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Vec3 = System.ValueTuple<float, float, float>;
 
 namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
 {
@@ -14,9 +15,9 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
         /// <param name="A">Matrix to be decomposed</param>
         /// <param name="L">Lower triangular matrix</param>
         /// <returns><c>true</c>, iff A is positive-definite</returns>
-        public static bool Cholesky(Matrix3 A, ref Matrix3 L)
+        public static bool Cholesky(Matrix3 A, out Matrix3 L)
         {
-            L.SetAll(0);
+            L = Matrix3.Zero;
             L[0, 0] = (float)Math.Sqrt(A[0, 0]);
 
             if (L[0, 0] == 0)
@@ -58,27 +59,28 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
         /// Calculate the inverse of a matrix
         /// </summary>
         /// <param name="A">(Hermetian) matrix</param>
-        /// <param name="Inv">Receives the matrix inverse</param>
+        /// <param name="I">Receives the matrix inverse</param>
         /// <returns><>true</c>, iff A is inversible</returns>
-        public static bool Invert(Matrix3 A, ref Matrix3 Inv)
+        public static bool Invert(Matrix3 A, out Matrix3 I)
         {
-            Inv[0, 0] = A[1, 1] * A[2, 2] - A[1, 2] * A[2, 1];
-            Inv[0, 1] = -(A[0, 1] * A[2, 2] - A[0, 2] * A[2, 1]);
-            Inv[0, 2] = A[0, 1] * A[1, 2] - A[0, 2] * A[1, 1];
+            I = Matrix3.Zero;
+            I[0, 0] = A[1, 1] * A[2, 2] - A[1, 2] * A[2, 1];
+            I[0, 1] = -(A[0, 1] * A[2, 2] - A[0, 2] * A[2, 1]);
+            I[0, 2] = A[0, 1] * A[1, 2] - A[0, 2] * A[1, 1];
 
-            Inv[1, 0] = -(A[1, 0] * A[2, 2] - A[1, 2] * A[2, 0]);
-            Inv[1, 1] = A[0, 0] * A[2, 2] - A[0, 2] * A[2, 0];
-            Inv[1, 2] = -(A[0, 0] * A[1, 2] - A[0, 2] * A[1, 0]);
+            I[1, 0] = -(A[1, 0] * A[2, 2] - A[1, 2] * A[2, 0]);
+            I[1, 1] = A[0, 0] * A[2, 2] - A[0, 2] * A[2, 0];
+            I[1, 2] = -(A[0, 0] * A[1, 2] - A[0, 2] * A[1, 0]);
 
-            Inv[2, 0] = A[1, 0] * A[2, 1] - A[1, 1] * A[2, 0];
-            Inv[2, 1] = -(A[0, 0] * A[2, 1] - A[0, 1] * A[2, 0]);
-            Inv[2, 2] = A[0, 0] * A[1, 1] - A[0, 1] * A[1, 0];
+            I[2, 0] = A[1, 0] * A[2, 1] - A[1, 1] * A[2, 0];
+            I[2, 1] = -(A[0, 0] * A[2, 1] - A[0, 1] * A[2, 0]);
+            I[2, 2] = A[0, 0] * A[1, 1] - A[0, 1] * A[1, 0];
 
-            var detA = A.Row(0).Dot(Inv.Column(0));
+            var detA = A.Row(0).Dot(I.Column(0));
             if (Math.Abs(detA).RoundToZero() == 0)
                 return false;
 
-            _ = Inv.Div(detA, ref Inv);
+            _ = I.Div(detA, I);
             return true;
         }
 
@@ -87,7 +89,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
         /// </summary>
         /// <param name="A">A Matrix</param>
         /// <returns>Coefficients a,b,c of the characteristical polynome l³+a*l²+b*l+c</returns>
-        public static (float, float, float) Poly(Matrix3 A)
+        public static Vec3 Poly(Matrix3 A)
         {
             var tr = A.Trace;
             return (-tr, -0.5f * ((A._ * A).Trace - tr.Sqr()), -Det(A));
@@ -194,7 +196,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
             V[1.Col()] = v[1];
             V[2.Col()] = v[2];
 
-            L = Matrix3.Diag(new Vector3(l.ToArray()));
+            L = Matrix3.Diag(l[0], l[1], l[2]);
 
             return V;
         }
@@ -213,14 +215,15 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
         /// <summary>
         /// Apply an arbitrary function to a matrix.
         /// </summary>
-        /// <param name="M">Matrix to apply the function to</param>
+        /// <param name="A">Matrix to apply the function to</param>
         /// <param name="fn">Function to be applied</param>
-        /// <param name="result">Matrix that receives the result</param>
+        /// <param name="C">Matrix that receives the result</param>
         /// <returns><c>true</c>, iff the function could be applied</returns>
-        public static bool ApplyFunction(Matrix3 M, Func<float, float> fn, ref Matrix3 result)
+        public static bool ApplyFunction(Matrix3 A, Func<float, float> fn, out Matrix3 C)
         {
-            var lambda = Eigenvalues(M);
-            var V = Eigenvectors(M, lambda, out Matrix3 L);
+            C = Matrix3.Zero;
+            var lambda = Eigenvalues(A);
+            var V = Eigenvectors(A, lambda, out Matrix3 L);
             if (V == null)
                 return false;
 
@@ -228,11 +231,10 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
             L[1, 1] = fn(L[1, 1]);
             L[2, 2] = fn(L[2, 2]);
 
-            var VInv = Matrix3.Zero;
-            if (!Invert(V, ref VInv))
+            if (!Invert(V, out Matrix3 VI))
                 throw new InvalidOperationException("non-invertible eigenbasis - numeric instability?");
 
-            _ = (V._ * L).Mul(VInv, ref result);
+            _ = (V._ * L).Mul(VI, C);
 
             return true;
         }
