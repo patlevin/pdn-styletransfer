@@ -1,4 +1,6 @@
-﻿namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
+﻿using System;
+
+namespace PaintDotNet.Effects.ML.StyleTransfer.Maths
 {
     /// <summary>
     /// Some common hash functions for combining hashes
@@ -56,5 +58,10 @@
 
             return hash;
         }
+
+        /// <summary>
+        /// Default hash function.
+        /// </summary>
+        public static Func<int, int, int, int> Default = Simple;
     }
 }
