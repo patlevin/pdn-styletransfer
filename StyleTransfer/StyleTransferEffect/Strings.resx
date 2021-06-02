@@ -147,6 +147,9 @@
   <data name="ConfigDialog.groupBoxColor" xml:space="preserve">
     <value>Color</value>
   </data>
+  <data name="ConfigDialog.groupBoxDevice" xml:space="preserve">
+    <value>Device</value>
+  </data>
   <data name="ConfigDialog.groupBoxStyleModel" xml:space="preserve">
     <value>Style Extraction</value>
   </data>
@@ -169,6 +172,15 @@
     <value>Style Image</value>
   </data>
   <data name="ConfigDialog.labelStyleDimensions" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ConfigDialog.radioButtonCpu" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ConfigDialog.radioButtonGpu1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ConfigDialog.radioButtonGpu2" xml:space="preserve">
     <value />
   </data>
   <data name="ConfigDialog.radioButtonStyleFast" xml:space="preserve">

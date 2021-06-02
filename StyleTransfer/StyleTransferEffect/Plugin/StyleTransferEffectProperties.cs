@@ -108,6 +108,11 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
         /// </summary>
         public string ColorTransfer { get; set; }
 
+        /// <summary>
+        /// Get or set the compute device index (-1: CPU, 0: GPU, 1: 2nd GPU)
+        /// </summary>
+        public int ComputeDevice { get; set; }
+
         private readonly RangedValue<int> styleAmount = new RangedValue<int>(MAX_AMOUNT, 0, MAX_AMOUNT);
 
         private readonly RangedValue<int> styleSize = new RangedValue<int>(DEFAULT_SIZE, MIN_SIZE, MAX_SIZE);

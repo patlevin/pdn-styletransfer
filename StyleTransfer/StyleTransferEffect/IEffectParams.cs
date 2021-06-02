@@ -38,6 +38,11 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
         /// </summary>
         IColorTransfer PostProcess { get; set; }
 
+        /// <summary>
+        /// Get or set the index of the compute device (-1: CPU, 0: GPU, 1: 2nd GPU)
+        /// </summary>
+        int ComputeDevice { get; set; }
+
         #region Performance Information
         /// <summary>
         /// Style compression time in ms

@@ -141,6 +141,9 @@
   <data name="ConfigDialog.groupBoxColor" xml:space="preserve">
     <value>Colores</value>
   </data>
+  <data name="ConfigDialog.groupBoxDevice" xml:space="preserve">
+    <value>Dispositivo</value>
+  </data>
   <data name="ConfigDialog.groupBoxStyleModel" xml:space="preserve">
     <value>Extracción de estilo</value>
   </data>

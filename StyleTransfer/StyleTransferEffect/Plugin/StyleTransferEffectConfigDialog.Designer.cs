@@ -32,6 +32,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StyleTransferEffectConfigDialog));
             this.buttonOk = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -44,7 +45,6 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.groupBoxTransformModel = new System.Windows.Forms.GroupBox();
             this.radioButtonTransformFast = new System.Windows.Forms.RadioButton();
             this.radioButtonTransformQuality = new System.Windows.Forms.RadioButton();
-            this.buttonResetAmount = new System.Windows.Forms.Button();
             this.toolTipHelp = new System.Windows.Forms.ToolTip(this.components);
             this.tabControlMode = new System.Windows.Forms.TabControl();
             this.tabPagePresets = new System.Windows.Forms.TabPage();
@@ -53,19 +53,26 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.comboBoxPreset = new System.Windows.Forms.ComboBox();
             this.tabPageCustom = new System.Windows.Forms.TabPage();
             this.checkBoxAspect = new System.Windows.Forms.CheckBox();
-            this.panelWarning = new System.Windows.Forms.Panel();
             this.labelSizeWarning = new System.Windows.Forms.Label();
             this.labelStyleDimensions = new System.Windows.Forms.Label();
-            this.buttonResetSize = new System.Windows.Forms.Button();
             this.numericUpDownSize = new System.Windows.Forms.NumericUpDown();
             this.labelSize = new System.Windows.Forms.Label();
             this.trackBarSize = new PaintDotNet.Effects.ML.StyleTransfer.Plugin.ExtendedTrackBar();
             this.buttonSelectStyle = new System.Windows.Forms.Button();
             this.labelStyle = new System.Windows.Forms.Label();
-            this.pictureBoxStyle = new System.Windows.Forms.PictureBox();
+            this.panelWarning = new System.Windows.Forms.Panel();
+            this.buttonResetSize = new System.Windows.Forms.Button();
             this.helpProvider = new PaintDotNet.Effects.ML.StyleTransfer.Plugin.HelpProvider();
             this.groupBoxColor = new System.Windows.Forms.GroupBox();
             this.comboBoxColor = new System.Windows.Forms.ComboBox();
+            this.groupBoxDevice = new System.Windows.Forms.GroupBox();
+            this.imageListDevices = new System.Windows.Forms.ImageList(this.components);
+            this.buttonResetAmount = new System.Windows.Forms.Button();
+            this.toolTips = new System.Windows.Forms.ToolTip(this.components);
+            this.radioButtonGpu2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonGpu1 = new System.Windows.Forms.RadioButton();
+            this.radioButtonCpu = new System.Windows.Forms.RadioButton();
+            this.pictureBoxStyle = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAmount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarAmount)).BeginInit();
             this.groupBoxStyleModel.SuspendLayout();
@@ -74,8 +81,9 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.tabPagePresets.SuspendLayout();
             this.tabPageCustom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxStyle)).BeginInit();
             this.groupBoxColor.SuspendLayout();
+            this.groupBoxDevice.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxStyle)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonOk
@@ -83,7 +91,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.buttonOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOk.Enabled = false;
-            this.buttonOk.Location = new System.Drawing.Point(152, 565);
+            this.buttonOk.Location = new System.Drawing.Point(152, 662);
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(75, 23);
             this.buttonOk.TabIndex = 0;
@@ -95,7 +103,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(238, 565);
+            this.buttonCancel.Location = new System.Drawing.Point(238, 662);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 1;
@@ -113,7 +121,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             // 
             this.numericUpDownAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.numericUpDownAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownAmount.Location = new System.Drawing.Point(238, 364);
+            this.numericUpDownAmount.Location = new System.Drawing.Point(238, 365);
             this.numericUpDownAmount.Name = "numericUpDownAmount";
             this.numericUpDownAmount.Size = new System.Drawing.Size(43, 22);
             this.numericUpDownAmount.TabIndex = 10;
@@ -128,7 +136,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             // 
             this.labelAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelAmount.AutoSize = true;
-            this.labelAmount.Location = new System.Drawing.Point(20, 348);
+            this.labelAmount.Location = new System.Drawing.Point(20, 349);
             this.labelAmount.Name = "labelAmount";
             this.labelAmount.Size = new System.Drawing.Size(76, 13);
             this.labelAmount.TabIndex = 9;
@@ -138,7 +146,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             // 
             this.trackBarAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBarAmount.LargeChange = 10;
-            this.trackBarAmount.Location = new System.Drawing.Point(6, 364);
+            this.trackBarAmount.Location = new System.Drawing.Point(6, 365);
             this.trackBarAmount.Maximum = 100;
             this.trackBarAmount.Name = "trackBarAmount";
             this.trackBarAmount.Size = new System.Drawing.Size(226, 45);
@@ -152,7 +160,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.groupBoxStyleModel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBoxStyleModel.Controls.Add(this.radioButtonStyleFast);
             this.groupBoxStyleModel.Controls.Add(this.radioButtonStyleQuality);
-            this.groupBoxStyleModel.Location = new System.Drawing.Point(17, 419);
+            this.groupBoxStyleModel.Location = new System.Drawing.Point(17, 420);
             this.groupBoxStyleModel.Name = "groupBoxStyleModel";
             this.groupBoxStyleModel.Size = new System.Drawing.Size(134, 75);
             this.groupBoxStyleModel.TabIndex = 11;
@@ -189,7 +197,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.groupBoxTransformModel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxTransformModel.Controls.Add(this.radioButtonTransformFast);
             this.groupBoxTransformModel.Controls.Add(this.radioButtonTransformQuality);
-            this.groupBoxTransformModel.Location = new System.Drawing.Point(176, 419);
+            this.groupBoxTransformModel.Location = new System.Drawing.Point(176, 420);
             this.groupBoxTransformModel.Name = "groupBoxTransformModel";
             this.groupBoxTransformModel.Size = new System.Drawing.Size(134, 75);
             this.groupBoxTransformModel.TabIndex = 12;
@@ -220,18 +228,6 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.radioButtonTransformQuality.Text = "High Quality";
             this.radioButtonTransformQuality.UseVisualStyleBackColor = true;
             this.radioButtonTransformQuality.CheckedChanged += new System.EventHandler(this.TransformationModelChanged);
-            // 
-            // buttonResetAmount
-            // 
-            this.buttonResetAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonResetAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonResetAmount.Image = global::PaintDotNet.Effects.ML.StyleTransfer.Properties.Resources.Reset;
-            this.buttonResetAmount.Location = new System.Drawing.Point(287, 364);
-            this.buttonResetAmount.Name = "buttonResetAmount";
-            this.buttonResetAmount.Size = new System.Drawing.Size(22, 23);
-            this.buttonResetAmount.TabIndex = 14;
-            this.buttonResetAmount.UseVisualStyleBackColor = true;
-            this.buttonResetAmount.Click += new System.EventHandler(this.ButtonResetAmountClick);
             // 
             // toolTipHelp
             // 
@@ -271,7 +267,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             // effectPreview
             // 
             this.effectPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.effectPreview.InitialImage = global::PaintDotNet.Effects.ML.StyleTransfer.Properties.Resources.StylePreview;
+            this.effectPreview.InitialImage = null;
             this.effectPreview.Location = new System.Drawing.Point(42, 37);
             this.effectPreview.Name = "effectPreview";
             this.effectPreview.OriginalImage = null;
@@ -307,15 +303,15 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             // 
             this.tabPageCustom.BackColor = System.Drawing.Color.Transparent;
             this.tabPageCustom.Controls.Add(this.checkBoxAspect);
-            this.tabPageCustom.Controls.Add(this.panelWarning);
             this.tabPageCustom.Controls.Add(this.labelSizeWarning);
             this.tabPageCustom.Controls.Add(this.labelStyleDimensions);
-            this.tabPageCustom.Controls.Add(this.buttonResetSize);
             this.tabPageCustom.Controls.Add(this.numericUpDownSize);
             this.tabPageCustom.Controls.Add(this.labelSize);
             this.tabPageCustom.Controls.Add(this.trackBarSize);
             this.tabPageCustom.Controls.Add(this.buttonSelectStyle);
             this.tabPageCustom.Controls.Add(this.labelStyle);
+            this.tabPageCustom.Controls.Add(this.panelWarning);
+            this.tabPageCustom.Controls.Add(this.buttonResetSize);
             this.tabPageCustom.Controls.Add(this.pictureBoxStyle);
             this.tabPageCustom.Location = new System.Drawing.Point(4, 22);
             this.tabPageCustom.Name = "tabPageCustom";
@@ -336,16 +332,6 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.checkBoxAspect.TabIndex = 29;
             this.checkBoxAspect.Text = "Match Aspect Ratio To Image";
             this.checkBoxAspect.UseVisualStyleBackColor = true;
-            // 
-            // panelWarning
-            // 
-            this.panelWarning.BackgroundImage = global::PaintDotNet.Effects.ML.StyleTransfer.Properties.Resources.Warning;
-            this.panelWarning.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panelWarning.Location = new System.Drawing.Point(3, 205);
-            this.panelWarning.Name = "panelWarning";
-            this.panelWarning.Size = new System.Drawing.Size(16, 16);
-            this.panelWarning.TabIndex = 28;
-            this.panelWarning.Visible = false;
             // 
             // labelSizeWarning
             // 
@@ -370,18 +356,6 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.labelStyleDimensions.Text = "0x0 px";
             this.labelStyleDimensions.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.labelStyleDimensions.Visible = false;
-            // 
-            // buttonResetSize
-            // 
-            this.buttonResetSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonResetSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonResetSize.Image = global::PaintDotNet.Effects.ML.StyleTransfer.Properties.Resources.Reset;
-            this.buttonResetSize.Location = new System.Drawing.Point(286, 225);
-            this.buttonResetSize.Name = "buttonResetSize";
-            this.buttonResetSize.Size = new System.Drawing.Size(22, 22);
-            this.buttonResetSize.TabIndex = 25;
-            this.buttonResetSize.UseVisualStyleBackColor = true;
-            this.buttonResetSize.Click += new System.EventHandler(this.ButtonResetSizeClick);
             // 
             // numericUpDownSize
             // 
@@ -452,6 +426,160 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.labelStyle.TabIndex = 20;
             this.labelStyle.Text = "Style Image";
             // 
+            // panelWarning
+            // 
+            this.panelWarning.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panelWarning.Location = new System.Drawing.Point(3, 205);
+            this.panelWarning.Name = "panelWarning";
+            this.panelWarning.Size = new System.Drawing.Size(16, 16);
+            this.panelWarning.TabIndex = 28;
+            this.panelWarning.Visible = false;
+            // 
+            // buttonResetSize
+            // 
+            this.buttonResetSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonResetSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonResetSize.Location = new System.Drawing.Point(286, 225);
+            this.buttonResetSize.Name = "buttonResetSize";
+            this.buttonResetSize.Size = new System.Drawing.Size(22, 22);
+            this.buttonResetSize.TabIndex = 25;
+            this.buttonResetSize.UseVisualStyleBackColor = true;
+            this.buttonResetSize.Click += new System.EventHandler(this.ButtonResetSizeClick);
+            // 
+            // helpProvider
+            // 
+            this.helpProvider.ToolTip = this.toolTipHelp;
+            // 
+            // groupBoxColor
+            // 
+            this.groupBoxColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBoxColor.Controls.Add(this.comboBoxColor);
+            this.groupBoxColor.Location = new System.Drawing.Point(16, 501);
+            this.groupBoxColor.Name = "groupBoxColor";
+            this.groupBoxColor.Size = new System.Drawing.Size(293, 48);
+            this.groupBoxColor.TabIndex = 16;
+            this.groupBoxColor.TabStop = false;
+            this.groupBoxColor.Text = "Colors";
+            // 
+            // comboBoxColor
+            // 
+            this.comboBoxColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxColor.FormattingEnabled = true;
+            this.comboBoxColor.Location = new System.Drawing.Point(7, 20);
+            this.comboBoxColor.Name = "comboBoxColor";
+            this.comboBoxColor.Size = new System.Drawing.Size(280, 21);
+            this.comboBoxColor.TabIndex = 0;
+            this.comboBoxColor.SelectedIndexChanged += new System.EventHandler(this.ComboBoxColorsSelectedIndexChanged);
+            // 
+            // groupBoxDevice
+            // 
+            this.groupBoxDevice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBoxDevice.Controls.Add(this.radioButtonGpu2);
+            this.groupBoxDevice.Controls.Add(this.radioButtonGpu1);
+            this.groupBoxDevice.Controls.Add(this.radioButtonCpu);
+            this.groupBoxDevice.Location = new System.Drawing.Point(17, 555);
+            this.groupBoxDevice.Name = "groupBoxDevice";
+            this.groupBoxDevice.Size = new System.Drawing.Size(292, 97);
+            this.groupBoxDevice.TabIndex = 17;
+            this.groupBoxDevice.TabStop = false;
+            this.groupBoxDevice.Text = "Device";
+            // 
+            // imageListDevices
+            // 
+            this.imageListDevices.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListDevices.ImageStream")));
+            this.imageListDevices.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListDevices.Images.SetKeyName(0, "generic_cpu.png");
+            this.imageListDevices.Images.SetKeyName(1, "amd_cpu.png");
+            this.imageListDevices.Images.SetKeyName(2, "intel_cpu.png");
+            this.imageListDevices.Images.SetKeyName(3, "generic_cpu.png");
+            this.imageListDevices.Images.SetKeyName(4, "generic_gpu.png");
+            this.imageListDevices.Images.SetKeyName(5, "amd_apu.png");
+            this.imageListDevices.Images.SetKeyName(6, "intel_igpu.png");
+            this.imageListDevices.Images.SetKeyName(7, "nvidia_dgpu.png");
+            this.imageListDevices.Images.SetKeyName(8, "generic_gpu.png");
+            this.imageListDevices.Images.SetKeyName(9, "amd_dgpu.png");
+            this.imageListDevices.Images.SetKeyName(10, "intel_dgpu.png");
+            this.imageListDevices.Images.SetKeyName(11, "nvidia_dgpu.png");
+            this.imageListDevices.Images.SetKeyName(12, "generic_cpu_unselected.png");
+            this.imageListDevices.Images.SetKeyName(13, "amd_cpu_unselected.png");
+            this.imageListDevices.Images.SetKeyName(14, "intel_cpu_unselected.png");
+            this.imageListDevices.Images.SetKeyName(15, "generic_cpu_unselected.png");
+            this.imageListDevices.Images.SetKeyName(16, "generic_gpu_unselected.png");
+            this.imageListDevices.Images.SetKeyName(17, "amd_apu_unselected.png");
+            this.imageListDevices.Images.SetKeyName(18, "intel_igpu_unselected.png");
+            this.imageListDevices.Images.SetKeyName(19, "nvidia_dgpu_unselected.png");
+            this.imageListDevices.Images.SetKeyName(20, "generic_gpu_unselected.png");
+            this.imageListDevices.Images.SetKeyName(21, "amd_dgpu_unselected.png");
+            this.imageListDevices.Images.SetKeyName(22, "intel_dgpu_unselected.png");
+            this.imageListDevices.Images.SetKeyName(23, "nvidia_dgpu_unselected.png");
+            // 
+            // buttonResetAmount
+            // 
+            this.buttonResetAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonResetAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonResetAmount.Location = new System.Drawing.Point(287, 365);
+            this.buttonResetAmount.Name = "buttonResetAmount";
+            this.buttonResetAmount.Size = new System.Drawing.Size(22, 23);
+            this.buttonResetAmount.TabIndex = 14;
+            this.buttonResetAmount.UseVisualStyleBackColor = true;
+            this.buttonResetAmount.Click += new System.EventHandler(this.ButtonResetAmountClick);
+            // 
+            // radioButtonGpu2
+            // 
+            this.radioButtonGpu2.Appearance = System.Windows.Forms.Appearance.Button;
+            this.radioButtonGpu2.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.radioButtonGpu2.FlatAppearance.CheckedBackColor = System.Drawing.Color.MintCream;
+            this.radioButtonGpu2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.radioButtonGpu2.ImageIndex = 2;
+            this.radioButtonGpu2.ImageList = this.imageListDevices;
+            this.radioButtonGpu2.Location = new System.Drawing.Point(220, 19);
+            this.radioButtonGpu2.Name = "radioButtonGpu2";
+            this.radioButtonGpu2.Size = new System.Drawing.Size(64, 64);
+            this.radioButtonGpu2.TabIndex = 2;
+            this.toolTips.SetToolTip(this.radioButtonGpu2, "GPU name here");
+            this.radioButtonGpu2.UseVisualStyleBackColor = true;
+            this.radioButtonGpu2.CheckedChanged += new System.EventHandler(this.ComputeDeviceChanged);
+            this.radioButtonGpu2.MouseEnter += new System.EventHandler(this.DeviceEnterFocus);
+            this.radioButtonGpu2.MouseLeave += new System.EventHandler(this.DeviceLeaveFocus);
+            // 
+            // radioButtonGpu1
+            // 
+            this.radioButtonGpu1.Appearance = System.Windows.Forms.Appearance.Button;
+            this.radioButtonGpu1.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.radioButtonGpu1.FlatAppearance.CheckedBackColor = System.Drawing.Color.MintCream;
+            this.radioButtonGpu1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.radioButtonGpu1.ImageIndex = 1;
+            this.radioButtonGpu1.ImageList = this.imageListDevices;
+            this.radioButtonGpu1.Location = new System.Drawing.Point(114, 19);
+            this.radioButtonGpu1.Name = "radioButtonGpu1";
+            this.radioButtonGpu1.Size = new System.Drawing.Size(64, 64);
+            this.radioButtonGpu1.TabIndex = 1;
+            this.toolTips.SetToolTip(this.radioButtonGpu1, "GPU name here");
+            this.radioButtonGpu1.UseVisualStyleBackColor = true;
+            this.radioButtonGpu1.CheckedChanged += new System.EventHandler(this.ComputeDeviceChanged);
+            this.radioButtonGpu1.MouseEnter += new System.EventHandler(this.DeviceEnterFocus);
+            this.radioButtonGpu1.MouseLeave += new System.EventHandler(this.DeviceLeaveFocus);
+            // 
+            // radioButtonCpu
+            // 
+            this.radioButtonCpu.Appearance = System.Windows.Forms.Appearance.Button;
+            this.radioButtonCpu.Checked = true;
+            this.radioButtonCpu.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.radioButtonCpu.FlatAppearance.CheckedBackColor = System.Drawing.Color.MintCream;
+            this.radioButtonCpu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.radioButtonCpu.ImageIndex = 0;
+            this.radioButtonCpu.ImageList = this.imageListDevices;
+            this.radioButtonCpu.Location = new System.Drawing.Point(8, 19);
+            this.radioButtonCpu.Name = "radioButtonCpu";
+            this.radioButtonCpu.Size = new System.Drawing.Size(64, 64);
+            this.radioButtonCpu.TabIndex = 0;
+            this.radioButtonCpu.TabStop = true;
+            this.toolTips.SetToolTip(this.radioButtonCpu, "CPU Name here");
+            this.radioButtonCpu.UseVisualStyleBackColor = true;
+            this.radioButtonCpu.CheckedChanged += new System.EventHandler(this.ComputeDeviceChanged);
+            this.radioButtonCpu.MouseEnter += new System.EventHandler(this.DeviceEnterFocus);
+            this.radioButtonCpu.MouseLeave += new System.EventHandler(this.DeviceLeaveFocus);
+            // 
             // pictureBoxStyle
             // 
             this.pictureBoxStyle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -469,37 +597,13 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.pictureBoxStyle.Click += new System.EventHandler(this.PictureBoxStyleClick);
             this.pictureBoxStyle.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaintStyle);
             // 
-            // helpProvider
-            // 
-            this.helpProvider.ToolTip = this.toolTipHelp;
-            // 
-            // groupBoxColor
-            // 
-            this.groupBoxColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBoxColor.Controls.Add(this.comboBoxColor);
-            this.groupBoxColor.Location = new System.Drawing.Point(16, 500);
-            this.groupBoxColor.Name = "groupBoxColor";
-            this.groupBoxColor.Size = new System.Drawing.Size(293, 48);
-            this.groupBoxColor.TabIndex = 16;
-            this.groupBoxColor.TabStop = false;
-            this.groupBoxColor.Text = "Colors";
-            // 
-            // comboBoxColor
-            // 
-            this.comboBoxColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxColor.FormattingEnabled = true;
-            this.comboBoxColor.Location = new System.Drawing.Point(7, 20);
-            this.comboBoxColor.Name = "comboBoxColor";
-            this.comboBoxColor.Size = new System.Drawing.Size(280, 21);
-            this.comboBoxColor.TabIndex = 0;
-            this.comboBoxColor.SelectedIndexChanged += new System.EventHandler(this.ComboBoxColorsSelectedIndexChanged);
-            // 
             // StyleTransferEffectConfigDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(323, 594);
+            this.ClientSize = new System.Drawing.Size(323, 691);
+            this.Controls.Add(this.groupBoxDevice);
             this.Controls.Add(this.groupBoxColor);
             this.Controls.Add(this.tabControlMode);
             this.Controls.Add(this.buttonResetAmount);
@@ -525,8 +629,9 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             this.tabPageCustom.ResumeLayout(false);
             this.tabPageCustom.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxStyle)).EndInit();
             this.groupBoxColor.ResumeLayout(false);
+            this.groupBoxDevice.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxStyle)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -568,5 +673,11 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
         private EffectPreview effectPreview;
         private System.Windows.Forms.GroupBox groupBoxColor;
         private System.Windows.Forms.ComboBox comboBoxColor;
+        private System.Windows.Forms.GroupBox groupBoxDevice;
+        private System.Windows.Forms.RadioButton radioButtonCpu;
+        private System.Windows.Forms.RadioButton radioButtonGpu2;
+        private System.Windows.Forms.RadioButton radioButtonGpu1;
+        private System.Windows.Forms.ImageList imageListDevices;
+        private System.Windows.Forms.ToolTip toolTips;
     }
 }

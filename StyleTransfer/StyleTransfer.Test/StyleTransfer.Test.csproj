@@ -69,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DevicesTest.cs" />
     <Compile Include="EffectGraphTest.cs" />
     <Compile Include="LinAlgTests.cs" />
     <Compile Include="Matrix3Tests.cs" />

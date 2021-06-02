@@ -30,6 +30,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             ApplyLocalisedHelp();
             LoadPresets();
             LoadColorTransferMethods();
+            LoadDevices();
         }
 
         /// <summary>
@@ -250,6 +251,46 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             comboBoxColor.DataSource = list;
         }
 
+        private void LoadDevices()
+        {
+            var devices = Devices.ComputeDevices;
+            if (devices.Count > 0)
+            {
+                toolTips.SetToolTip(radioButtonCpu, devices[0].Name);
+                radioButtonCpu.ImageIndex = GetDeviceImageIndex(
+                    devices[0], radioButtonCpu.Checked);
+                radioButtonCpu.Tag = devices[0];
+            }
+
+            radioButtonGpu1.Visible = false;
+            radioButtonGpu2.Visible = false;
+            if (devices.Count > 1)
+            {
+                toolTips.SetToolTip(radioButtonGpu1, devices[1].Name);
+                radioButtonGpu1.ImageIndex = GetDeviceImageIndex(
+                    devices[1], radioButtonGpu1.Checked);
+                radioButtonGpu1.Visible = true;
+                radioButtonGpu1.Tag = devices[1];
+            }
+
+            if (devices.Count > 2)
+            {
+                toolTips.SetToolTip(radioButtonGpu2, devices[2].Name);
+                radioButtonGpu2.ImageIndex = GetDeviceImageIndex(
+                    devices[2], radioButtonGpu2.Checked);
+                radioButtonGpu2.Visible = true;
+                radioButtonGpu2.Tag = devices[2];
+            }
+
+            ComputeDeviceChanged(radioButtonCpu, EventArgs.Empty);
+        }
+
+        private int GetDeviceImageIndex(DeviceInfo info, bool isChecked)
+        {
+            var offset = isChecked ? 0 : 12;
+            return (((int)info.Type) * 4 + (int)info.Manufacturer) + offset;
+        }
+
         #region Event Handlers
         private void ButtonOkClick(object sender, EventArgs e)
         {
@@ -422,10 +463,58 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             }
         }
 
+        // change colour transfer post-processing option
         private void ComboBoxColorsSelectedIndexChanged(object sender, EventArgs e)
         {
             EffectToken.Properties.ColorTransfer = (string)comboBoxColor.SelectedValue;
         }
+
+        // set compute device
+        private void ComputeDeviceChanged(object sender, EventArgs e)
+        {
+            var selected = (RadioButton)sender;
+            var info = (DeviceInfo)selected.Tag;
+
+            EffectToken.Properties.ComputeDevice = info.DeviceId;
+
+            selected.ImageIndex = GetDeviceImageIndex(
+                (DeviceInfo)selected.Tag, selected.Checked);
+
+            var performance =
+                info.Type == DeviceType.InternalGpu ? "✈️" :
+                info.Type == DeviceType.DiscreteGpu ? "🚀" :
+                "";
+
+            var label = StringResources.GetText(groupBoxDevice);
+            var description = toolTips.GetToolTip(selected);
+            var text = $"{label}: {description} {performance}";
+
+            if (text.Length > 50)
+            {
+                text = text.Substring(0, 48) + "...";
+            }
+
+            groupBoxDevice.Text = text;
+        }
+
+        private void DeviceEnterFocus(object sender, EventArgs e)
+        {
+            var button = (RadioButton)sender;
+            if (!button.Checked)
+            {
+                button.ImageIndex = GetDeviceImageIndex((DeviceInfo)button.Tag, true);
+            }
+        }
+
+        private void DeviceLeaveFocus(object sender, EventArgs e)
+        {
+            var button = (RadioButton)sender;
+            if (!button.Checked)
+            {
+                button.ImageIndex = GetDeviceImageIndex((DeviceInfo)button.Tag, false);
+            }
+        }
+
         #endregion
 
         // Return the size of the style image scaling preview

@@ -18,6 +18,9 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             Properties = new StyleTransferEffectProperties();
         }
 
+        /// <summary>
+        /// Effect properties
+        /// </summary>
         public StyleTransferEffectProperties Properties { get; }
 
         /// <summary>

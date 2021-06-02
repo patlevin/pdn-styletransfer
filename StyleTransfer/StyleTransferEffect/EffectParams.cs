@@ -55,6 +55,9 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
         public IColorTransfer PostProcess { get; set; }
 
         /// <inheritdoc/>
+        public int ComputeDevice { get; set; }
+
+        /// <inheritdoc/>
         public TimeSpan StyleTime { get; internal set; }
 
         /// <inheritdoc/>
