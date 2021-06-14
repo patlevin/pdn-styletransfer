@@ -1,34 +1,63 @@
 ﻿namespace PaintDotNet.Effects.ML.StyleTransfer.Test
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System;
     using System.Drawing;
+    using System.IO;
+    using System.Runtime.InteropServices;
+
+    class ModelProvider : IModelProvider
+    {
+        public ModelType StyleType { get; set; }
+
+        public ModelType TransformType { get; set; }
+
+        public int ComputationDevice { get; set; }
+
+        public IStyleModel Style => styleModel;
+
+        public ITransformModel Transform => transformModel;
+
+        public ModelProvider(bool load = false)
+        {
+            if (load)
+            {
+                styleModel.Load(LoadResource("resources.style_mobilenet.onnx"), -1);
+                transformModel.Load(LoadResource("resources.transformer_separable.onnx"), -1);
+            }
+        }
+
+        public void Dispose()
+        {
+            Style.Dispose();
+            Transform.Dispose();
+            GC.SuppressFinalize(this);
+        }
+
+        private byte[] LoadResource(string name)
+        {
+            var assembly = typeof(EffectGraphTest).Assembly;
+            using (var stream = assembly.GetManifestResourceStream(GetType(), name))
+            {
+                var data = new byte[stream.Length];
+                stream.Read(data, 0, data.Length);
+                return data;
+            }
+        }
+
+        private readonly IStyleModel styleModel = new StyleModel();
+        private readonly ITransformModel transformModel = new TransformerModel();
+    }
 
     [TestClass]
     public class EffectGraphTest
     {
         [TestMethod]
-        public void StyleModelIsNotNull()
-        {
-            using (var graph = new EffectGraph())
-            {
-                Assert.IsNotNull(graph.Style);
-            }
-        }
-
-        [TestMethod]
-        public void TransformerModelIsNotNull()
-        {
-            using (var graph = new EffectGraph())
-            {
-                Assert.IsNotNull(graph.Transformer);
-            }
-        }
-
-        [TestMethod]
         public void EffectParamsIsNotNull()
         {
-            using (var graph = new EffectGraph())
+            using (var provider = new ModelProvider())
             {
+                var graph = new EffectGraph(provider);
                 Assert.IsNotNull(graph.Params);
             }
         }
@@ -39,22 +68,10 @@
             + "picky with regards to the ONNX OpSet used - test for compatibility here")]
         public void CanRunCompatibleModel()
         {
-            using (var graph = new EffectGraph())
+            using (var provider = new ModelProvider(load: true))
             {
+                var graph = new EffectGraph(provider);
                 var assembly = typeof(EffectGraphTest).Assembly;
-                using (var stream = assembly.GetManifestResourceStream(GetType(), "resources.style_mobilenet.onnx"))
-                {
-                    var model = new byte[stream.Length];
-                    stream.Read(model, 0, model.Length);
-                    graph.Style.Load(model);
-                }
-
-                using (var stream = assembly.GetManifestResourceStream(GetType(), "resources.transformer_separable.onnx"))
-                {
-                    var model = new byte[stream.Length];
-                    stream.Read(model, 0, model.Length);
-                    graph.Transformer.Load(model);
-                }
 
                 using (var bitmap = new Bitmap(assembly.GetManifestResourceStream(GetType(), "resources.style.png")))
                 {

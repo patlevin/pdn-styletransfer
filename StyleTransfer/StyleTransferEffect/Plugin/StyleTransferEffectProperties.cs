@@ -4,17 +4,6 @@
 namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
 {
     /// <summary>
-    /// Model type
-    /// </summary>
-    public enum ModelType
-    {
-        /// <summary>Fast model</summary>
-        Fast,
-        /// <summary>High quality model</summary>
-        Quality
-    }
-
-    /// <summary>
     /// Configuration properties of the effect
     /// </summary>
     public class StyleTransferEffectProperties

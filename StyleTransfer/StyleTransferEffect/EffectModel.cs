@@ -4,70 +4,106 @@
 namespace PaintDotNet.Effects.ML.StyleTransfer
 {
     using Microsoft.ML.OnnxRuntime;
-
+    using Microsoft.ML.OnnxRuntime.Tensors;
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
 
     /// <summary>
     /// Inference model for AI-based effects holding all relevant data
     /// </summary>
-    internal class EffectModel : IEffectModel, IDisposable
+    internal class EffectModel : IEffectModel
     {
-        /// <summary>
-        /// Load an ONNX model file
-        /// </summary>
-        /// <param name="modelFile">Path to an ONNX model file</param>
-        public void Load(string modelFile)
+        /// <inheritdoc/>
+        public bool Ready => Session != null;
+
+        /// <inheritdoc/>
+        public void SetDevice(int deviceId)
         {
-            Load(File.ReadAllBytes(modelFile));
+            Session?.Dispose();
+            options?.Dispose();
+            options = new SessionOptions
+            {
+                GraphOptimizationLevel = GraphOptimizationLevel.ORT_ENABLE_ALL,
+                ExecutionMode = deviceId < 0 ?
+                    ExecutionMode.ORT_PARALLEL :
+                    ExecutionMode.ORT_SEQUENTIAL,
+                EnableMemoryPattern = deviceId < 0
+            };
+
+            if (deviceId >= 0)
+            {
+                options.AppendExecutionProvider_DML(deviceId);
+            }
+
+            Session = new InferenceSession(model, options);
         }
 
-        /// <summary>
-        /// Load an ONNX model 
-        /// </summary>
-        /// <param name="modelData">Binary contents of an ONNX model file</param>
-        public void Load(byte[] modelData)
+        /// <inheritdoc/>
+        public void Load(string modelFile, int deviceId)
         {
-            Reset(modelData);
+            Load(File.ReadAllBytes(modelFile), deviceId);
+        }
+
+        /// <inheritdoc/>
+        public void Load(byte[] modelData, int deviceId)
+        {
+            model = modelData;
+            if (model?.Length > 0)
+            {
+                SetDevice(deviceId);
+                OnModelLoaded();
+            }
         }
 
         /// <summary>
         /// Get the current inference session - <c>null</c> if no model was loaded first
         /// </summary>
-        public InferenceSession Session { get; private set; }
+        protected InferenceSession Session { get; private set; }
 
         /// <summary>
         /// Allows specialised models to perform actions (e.g. validation)
         /// when the model was updated
         /// </summary>
-        /// <param name="session">Current inference session for querying meta data</param>
-        protected virtual void OnModelLoaded(InferenceSession session) { }
+        protected virtual void OnModelLoaded()
+        { }
 
-        private void Reset(byte[] modelData)
+        /// <summary>
+        /// Return the name of the input tensor that matches the given dimensions.
+        /// </summary>
+        /// <param name="dimensions">Dimensions of the requested tensor</param>
+        /// <returns>Name of the input tensor that matches the given dimensions</returns>
+        protected string TensorBySize(IStructuralEquatable dimensions)
         {
-            Session?.Dispose();
-            model = modelData;
-            if (model?.Length > 0)
+            return Session.InputMetadata
+                          .Single(item => MatchDimensions(item.Value, dimensions))
+                          .Key;
+        }
+
+        /// <summary>
+        /// Run inference on the model given the provided named inputs.
+        /// </summary>
+        /// <param name="inputs">Named input tensors</param>
+        /// <returns>Single inference result tensor</returns>
+        protected Tensor<float> Run(IReadOnlyCollection<NamedOnnxValue> inputs)
+        {
+            using (var results = Session.Run(inputs))
             {
-                Session = new InferenceSession(model, options);
-                OnModelLoaded(Session);
+                return results.Single().AsTensor<float>().Clone();
             }
         }
 
         // Return whether node input meta data matches the given dimensions
-        static protected bool DimEquals(NodeMetadata metadata, IStructuralEquatable x)
+        static private bool MatchDimensions(NodeMetadata metadata, IStructuralEquatable expected)
         {
-            return x.Equals(metadata.Dimensions, StructuralComparisons.StructuralEqualityComparer);
+            return expected.Equals(metadata.Dimensions, StructuralComparisons.StructuralEqualityComparer);
         }
 
         private byte[] model;
 
-        private readonly SessionOptions options = new SessionOptions
-        {
-            ExecutionMode = ExecutionMode.ORT_PARALLEL,
-            GraphOptimizationLevel = GraphOptimizationLevel.ORT_ENABLE_ALL
-        };
+        private SessionOptions options;
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
@@ -92,6 +128,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
         public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }

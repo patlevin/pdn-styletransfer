@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PaintDotNet.Effects.ML.StyleTransfer.Dml;
 
 namespace PaintDotNet.Effects.ML.StyleTransfer.Test
 {
@@ -60,7 +61,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Test
 
             bool IsIntegratedGpu(string name)
             {
-                return Plugin.Devices.SelectGpuType(name, true) == Plugin.DeviceType.InternalGpu;
+                return Devices.QueryDeviceType(name, VendorId.Intel) == DeviceType.Igp;
             }
 
             foreach (var name in KnowniGpuNames)
@@ -72,8 +73,8 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Test
         [TestMethod("SelectGpuType should detect known Intel dGPU")]
         public void TestDetectInteldGpu()
         {
-            var isdGpu = Plugin.Devices.SelectGpuType("Iris Xe Max", true) ==
-                Plugin.DeviceType.DiscreteGpu;
+            var isdGpu = Devices.QueryDeviceType("Iris Xe Max", VendorId.Intel) ==
+                DeviceType.Dgpu;
             Assert.IsTrue(isdGpu);
         }
 
@@ -124,7 +125,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Test
 
             bool IsIntegratedGpu(string name)
             {
-                return Plugin.Devices.SelectGpuType(name, false) == Plugin.DeviceType.InternalGpu;
+                return Devices.QueryDeviceType(name, VendorId.Amd) == DeviceType.Igp;
             }
 
             foreach (var name in KnownApuNames)
@@ -136,8 +137,12 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Test
         [TestMethod("SelectGpuType should detect known AMD GPU")]
         public void TestDetectAmdGpu()
         {
-            var isdGpu = Plugin.Devices.SelectGpuType("Radeon RX Vega 56", false) ==
-                Plugin.DeviceType.DiscreteGpu;
+            var isdGpu = Devices.QueryDeviceType("Radeon RX Vega 56", VendorId.Amd) ==
+                DeviceType.Dgpu;
+            Assert.IsTrue(isdGpu);
+            // this one's from my old laptop
+            isdGpu = Devices.QueryDeviceType("Radeon HD 5000 Series", VendorId.Amd) ==
+                DeviceType.Dgpu;
             Assert.IsTrue(isdGpu);
         }
     }

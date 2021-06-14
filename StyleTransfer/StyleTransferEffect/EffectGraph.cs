@@ -1,17 +1,15 @@
 ﻿// SPDX-License-Identifier: MIT
 // Copyright © 2020 Patrick Levin
 
+using Microsoft.ML.OnnxRuntime.Tensors;
+
+using System;
+using System.Diagnostics;
+using System.Diagnostics.Contracts;
+using System.Drawing;
+
 namespace PaintDotNet.Effects.ML.StyleTransfer
 {
-    using Microsoft.ML.OnnxRuntime;
-    using Microsoft.ML.OnnxRuntime.Tensors;
-
-    using System;
-    using System.Diagnostics;
-    using System.Diagnostics.Contracts;
-    using System.Drawing;
-    using System.Linq;
-
     /// <summary>
     /// Current graph state
     /// </summary>
@@ -62,7 +60,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
     /// <summary>
     /// Wraps the effect calculation
     /// </summary>
-    public class EffectGraph : IDisposable
+    public class EffectGraph
     {
         /// <summary>
         /// Minimum style image dimension (width or height) in pixels
@@ -85,16 +83,6 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
         public event EventHandler<EffectGraphEventArgs> Update;
 
         /// <summary>
-        /// Get the style extraction model
-        /// </summary>
-        public IEffectModel Style => style;
-
-        /// <summary>
-        /// Get the content transformer model
-        /// </summary>
-        public IEffectModel Transformer => transformer;
-
-        /// <summary>
         /// Get the effect parameters (e.g. inputs and settings)
         /// </summary>
         public IEffectParams Params => effectParams;
@@ -107,7 +95,17 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
         /// <summary>
         /// Get whether the graph can be run (i.e. inference sessions are available)
         /// </summary>
-        public bool CanRun => style.Session != null && transformer.Session != null;
+        public bool CanRun
+            => modelProvider.Style.Ready && modelProvider.Transform.Ready;
+
+        /// <summary>
+        /// Initialise graph from model provider
+        /// </summary>
+        /// <param name="provider">Model provider instance</param>
+        public EffectGraph(IModelProvider provider)
+        {
+            modelProvider = provider;
+        }
 
         /// <summary>
         /// Run the stylising using the current set of parameters stored in <see cref="Params"/>
@@ -116,8 +114,8 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
         /// <returns>Stylised <see cref="Params.Content"/></returns>
         public Tensor<float> Run(bool updateStyle = true)
         {
-            Contract.Requires(style.Session != null, StringResources.MessageStyleModelNotLoaded);
-            Contract.Requires(transformer.Session != null, StringResources.MessageTransformerModelNotLoaded);
+            Contract.Requires(modelProvider.Style.Ready, StringResources.MessageStyleModelNotLoaded);
+            Contract.Requires(modelProvider.Transform.Ready, StringResources.MessageTransformerModelNotLoaded);
 
             var sw = Stopwatch.StartNew();
 
@@ -215,19 +213,9 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
 
         private Tensor<float> TransformContent(Tensor<float> styleInput)
         {
-            Tensor<float> stylised;
             Update?.Invoke(this, new EffectGraphEventArgs(GraphEvent.TransformContent));
             var sw = Stopwatch.StartNew();
-
-            using (var results = transformer.Session.Run(new NamedOnnxValue[]
-            {
-                NamedOnnxValue.CreateFromTensor(transformer.ContentImage, effectParams.Content),
-                NamedOnnxValue.CreateFromTensor(transformer.StyleVector, styleInput)
-            }))
-            {
-                stylised = results.Single().AsTensor<float>().Clone();
-            }
-
+            var stylised = modelProvider.Transform.Run(effectParams.Content, styleInput);
             effectParams.TransformTime = sw.Elapsed;
             return stylised;
         }
@@ -264,16 +252,12 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
             Update?.Invoke(this, new EffectGraphEventArgs(GraphEvent.CalculateIdentity));
 
             var sw = Stopwatch.StartNew();
+
             if (effectParams.IsIdentityRequired)
             {
-                using (var results = style.Session.Run(new NamedOnnxValue[]
-                {
-                    NamedOnnxValue.CreateFromTensor(style.InputImage, effectParams.ScaledContent)
-                }))
-                {
-                    effectParams.IdentityVector = results.Single().AsTensor<float>().Clone();
-                }
+                effectParams.IdentityVector = modelProvider.Style.Run(effectParams.ScaledContent);
             }
+
             effectParams.IdentityTime = sw.Elapsed;
         }
 
@@ -282,48 +266,17 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
             Update?.Invoke(this, new EffectGraphEventArgs(GraphEvent.CalculateStyle));
 
             var sw = Stopwatch.StartNew();
+
             if (!effectParams.IsStyleVectorValid)
             {
-                using (var results = style.Session.Run(new NamedOnnxValue[]
-                {
-                NamedOnnxValue.CreateFromTensor(style.InputImage, effectParams.Style)
-                }))
-                {
-                    effectParams.StyleVector = results.Single().AsTensor<float>().Clone();
-                }
+                effectParams.StyleVector = modelProvider.Style.Run(effectParams.Style);
             }
+
             effectParams.StyleTime = sw.Elapsed;
         }
 
-        private readonly StyleModel style = new StyleModel();
-
-        private readonly TransformerModel transformer = new TransformerModel();
+        private readonly IModelProvider modelProvider;
 
         private readonly EffectParams effectParams = new EffectParams();
-
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    style.Dispose();
-                    transformer.Dispose();
-                }
-
-                disposedValue = true;
-            }
-        }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
     }
 }

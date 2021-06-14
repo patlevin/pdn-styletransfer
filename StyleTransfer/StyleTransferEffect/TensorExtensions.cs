@@ -15,7 +15,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
     /// <summary>
     /// Tensor extension methods
     /// </summary>
-    public static class TensorExtensions
+    public static class Tensor
     {
         /// <summary>
         /// Return Tensor width if NHWC-formatted

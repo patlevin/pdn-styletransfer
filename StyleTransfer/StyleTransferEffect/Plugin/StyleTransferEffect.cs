@@ -39,9 +39,10 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
     {
         // tile margin in percent [0..1]
         private const float MARGIN = 0.2f;
-
+        // Model provider instance
+        private readonly IModelProvider modelProvider = new ModelProvider();
         // Effect graph (combined model graph)
-        private readonly EffectGraph graph = new EffectGraph();
+        private readonly EffectGraph graph;
         // Flag: call OnRender() from OnSetRenderInfo(), set after config dialog closes
         private bool mustCallOnRender = false;
         // Tile size for tiled rendering; 0 => don't use tile-based rendering
@@ -82,6 +83,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             : base(StringResources.EffectName, Properties.Resources.Icon, SubmenuNames.Artistic, options)
         {
             IsRenderingEnabled = true;
+            graph = new EffectGraph(modelProvider);
         }
 
         /// <summary>
@@ -186,10 +188,9 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
                     tileSize = tiles.Width;
                 }
 
-                graph.Style.Load(properties.StyleModel == ModelType.Fast
-                    ? ModelData.StyleFast : ModelData.StyleQuality);
-                graph.Transformer.Load(properties.TransformerModel == ModelType.Fast
-                    ? ModelData.TransformerFast : ModelData.TransformerQuality);
+                modelProvider.StyleType = properties.StyleModel;
+                modelProvider.TransformType = properties.TransformerModel;
+                modelProvider.ComputationDevice = properties.ComputeDevice;
 
                 graph.Params.PostProcess = TransferMethods
                     .All
@@ -213,11 +214,13 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             {
                 return limit / (size.Height + 0f);
             }
-            else if (!(requestedSize.Width > requestedSize.Height) && requestedSize.Width < limit)
+
+            if (!(requestedSize.Width > requestedSize.Height) && requestedSize.Width < limit)
             {
                 return limit / (size.Width + 0f);
             }
-            else return GetUpperScalingLimit(requestedSize, scalingFactor);
+
+            return GetUpperScalingLimit(requestedSize, scalingFactor);
         }
 
         // Get scaling factor limited to available memory
@@ -233,7 +236,8 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
                 var originalPixels = ((double)scaledSize.Width * scaledSize.Height) / scalingFactor;
                 return (float)(maxPixels / originalPixels);
             }
-            else return scalingFactor;
+
+            return scalingFactor;
         }
 
         /// <summary>
@@ -288,7 +292,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             base.OnDispose(disposing);
             if (disposing)
             {
-                graph.Dispose();
+                modelProvider.Dispose();
             }
         }
 

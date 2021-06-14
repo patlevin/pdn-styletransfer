@@ -4,11 +4,13 @@
 namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
 {
     using Color;
+    using Dml;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Drawing;
     using System.IO;
+    using System.Resources;
     using System.Windows.Forms;
 
     /// <summary>
@@ -30,6 +32,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             ApplyLocalisedHelp();
             LoadPresets();
             LoadColorTransferMethods();
+            LoadDeviceImages();
             LoadDevices();
         }
 
@@ -88,6 +91,10 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
                 comboBoxPreset.SelectedIndex = 0;
                 tabControlMode.SelectedTab = tabPageCustom;
             }
+
+            radioButtonCpu.Checked = properties.ComputeDevice < 0;
+            radioButtonGpu1.Checked = properties.ComputeDevice == 0;
+            radioButtonGpu2.Checked = properties.ComputeDevice == 1;
         }
 
         /// <summary>
@@ -253,10 +260,10 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
 
         private void LoadDevices()
         {
-            var devices = Devices.ComputeDevices;
+            var devices = Devices.GetComputeDevices();
             if (devices.Count > 0)
             {
-                toolTips.SetToolTip(radioButtonCpu, devices[0].Name);
+                toolTips.SetToolTip(radioButtonCpu, devices[0].Description);
                 radioButtonCpu.ImageIndex = GetDeviceImageIndex(
                     devices[0], radioButtonCpu.Checked);
                 radioButtonCpu.Tag = devices[0];
@@ -266,7 +273,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             radioButtonGpu2.Visible = false;
             if (devices.Count > 1)
             {
-                toolTips.SetToolTip(radioButtonGpu1, devices[1].Name);
+                toolTips.SetToolTip(radioButtonGpu1, devices[1].Description);
                 radioButtonGpu1.ImageIndex = GetDeviceImageIndex(
                     devices[1], radioButtonGpu1.Checked);
                 radioButtonGpu1.Visible = true;
@@ -275,7 +282,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
 
             if (devices.Count > 2)
             {
-                toolTips.SetToolTip(radioButtonGpu2, devices[2].Name);
+                toolTips.SetToolTip(radioButtonGpu2, devices[2].Description);
                 radioButtonGpu2.ImageIndex = GetDeviceImageIndex(
                     devices[2], radioButtonGpu2.Checked);
                 radioButtonGpu2.Visible = true;
@@ -285,10 +292,43 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
             ComputeDeviceChanged(radioButtonCpu, EventArgs.Empty);
         }
 
+        private void LoadDeviceImages()
+        {
+            var resourceManager = Properties.Resources.ResourceManager;
+            var deviceNames = Enum.GetNames(typeof(DeviceType));
+            foreach (var vendorId in Enum.GetNames(typeof(VendorId)))
+            {
+                var vendorName = vendorId.ToLowerInvariant();
+
+                foreach (var device in deviceNames)
+                {
+                    var deviceName = device.ToLowerInvariant();
+                    var selected = GetImage(vendorName, deviceName, out string key);
+                    imageListDevices.Images.Add(key, selected);
+                    var unselected = GetImage(vendorName, $"{deviceName}_unselected", out key);
+                    imageListDevices.Images.Add(key, unselected);
+                }
+            }
+
+            Image GetImage(string prefix, string suffix, out string name)
+            {
+                name = $"{prefix}_{suffix}";
+                var image = (Image)resourceManager.GetObject(name);
+                if (image == null)
+                {
+                    image = (Image)resourceManager.GetObject($"other_{suffix}");
+                }
+                return image;
+            }
+        }
+
         private int GetDeviceImageIndex(DeviceInfo info, bool isChecked)
         {
-            var offset = isChecked ? 0 : 12;
-            return (((int)info.Type) * 4 + (int)info.Manufacturer) + offset;
+            var vendor = Enum.GetName(typeof(VendorId), info.VendorId).ToLower();
+            var device = Enum.GetName(typeof(DeviceType), info.Type).ToLower();
+            var suffix = isChecked ? "" : "_unselected";
+            var key = $"{vendor}_{device}{suffix}";
+            return imageListDevices.Images.IndexOfKey(key);
         }
 
         #region Event Handlers
@@ -473,16 +513,21 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
         private void ComputeDeviceChanged(object sender, EventArgs e)
         {
             var selected = (RadioButton)sender;
+            selected.ImageIndex = GetDeviceImageIndex(
+                (DeviceInfo)selected.Tag, selected.Checked);
+
+            if (!selected.Checked)
+            {
+                return;
+            }
+
             var info = (DeviceInfo)selected.Tag;
 
             EffectToken.Properties.ComputeDevice = info.DeviceId;
 
-            selected.ImageIndex = GetDeviceImageIndex(
-                (DeviceInfo)selected.Tag, selected.Checked);
-
             var performance =
-                info.Type == DeviceType.InternalGpu ? "✈️" :
-                info.Type == DeviceType.DiscreteGpu ? "🚀" :
+                info.Type == DeviceType.Igp ? "✈️" :
+                info.Type == DeviceType.Dgpu ? "🚀" :
                 "";
 
             var label = StringResources.GetText(groupBoxDevice);

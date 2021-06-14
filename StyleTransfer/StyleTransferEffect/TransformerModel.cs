@@ -4,35 +4,34 @@
 namespace PaintDotNet.Effects.ML.StyleTransfer
 {
     using Microsoft.ML.OnnxRuntime;
-
-    using System.Collections;
-    using System.Linq;
+    using Microsoft.ML.OnnxRuntime.Tensors;
 
     /// <summary>
     /// Transformer Model implementation - gets the input parameter names
     /// </summary>
-    internal class TransformerModel : EffectModel
+    internal class TransformerModel : EffectModel, ITransformModel
     {
-        private static readonly IStructuralEquatable STYLE_DIMENSIONS = new int[] { -1, 1, 1, 100 };
-        private static readonly IStructuralEquatable IMAGE_DIMENSIONS = new int[] { -1, -1, -1, 3 };
+        /// <inheritdoc/>
+        public Tensor<float> Run(Tensor<float> content, Tensor<float> styleVector)
+        {
+            var inputs = new NamedOnnxValue[]
+            {
+                NamedOnnxValue.CreateFromTensor(contentName, content),
+                NamedOnnxValue.CreateFromTensor(styleName, styleVector)
+            };
 
-        /// <summary>
-        /// Content image input tensor name
-        /// </summary>
-        public string ContentImage { get; private set; }
-
-        /// <summary>
-        /// Style vector input tensor name
-        /// </summary>
-        public string StyleVector { get; private set; }
+            return Run(inputs);
+        }
 
         // Find content- and style input tensor names
-        protected override void OnModelLoaded(InferenceSession session)
+        protected override void OnModelLoaded()
         {
-            StyleVector = session.InputMetadata
-                .Single(kvp => DimEquals(kvp.Value, STYLE_DIMENSIONS)).Key;
-            ContentImage = session.InputMetadata
-                .Single(kvp => DimEquals(kvp.Value, IMAGE_DIMENSIONS)).Key;
+            contentName = TensorBySize(new int[] { -1, -1, -1, 3 });
+            styleName = TensorBySize(new int[] { -1, 1, 1, 100 });
         }
+
+        private string contentName;
+
+        private string styleName;
     }
 }

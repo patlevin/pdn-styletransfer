@@ -1,29 +1,33 @@
 ﻿// SPDX-License-Identifier: MIT
 // Copyright © 2020 Patrick Levin
 
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime.Tensors;
+
 namespace PaintDotNet.Effects.ML.StyleTransfer
 {
-    using Microsoft.ML.OnnxRuntime;
-
-    using System.Collections;
-    using System.Linq;
-
     /// <summary>
     /// Style Model implementation - reads the input parameter name 
     /// </summary>
-    internal class StyleModel : EffectModel
+    internal class StyleModel : EffectModel, IStyleModel
     {
-        static readonly IStructuralEquatable IMAGE_DIMENSIONS = new int[] { -1, -1, -1, 3 };
+        /// <inheritdoc/>
+        public Tensor<float> Run(Tensor<float> styleImage)
+        {
+            var inputs = new NamedOnnxValue[]
+            {
+                NamedOnnxValue.CreateFromTensor(inputName, styleImage)
+            };
 
-        /// <summary>
-        /// Input image tensor name
-        /// </summary>
-        public string InputImage { get; private set; }
+            return Run(inputs);
+        }
 
         // Extract input tensor name while verifying model parameters
-        protected override void OnModelLoaded(InferenceSession session)
+        protected override void OnModelLoaded()
         {
-            InputImage = session.InputMetadata.Single(kvp => DimEquals(kvp.Value, IMAGE_DIMENSIONS)).Key;
+            inputName = TensorBySize(new int[] { -1, -1, -1, 3 });
         }
+
+        private string inputName;
     }
 }

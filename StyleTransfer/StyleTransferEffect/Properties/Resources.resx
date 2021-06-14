@@ -130,4 +130,94 @@
   <data name="StylePreview" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StylePreview.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="amd_cpu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\amd_cpu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="amd_cpu_unselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\amd_cpu_unselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="amd_dgpu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\amd_dgpu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="amd_dgpu_unselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\amd_dgpu_unselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="apple_cpu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\apple_cpu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="apple_cpu_unselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\apple_cpu_unselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="apple_igp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\apple_igp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="apple_igp_unselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\apple_igp_unselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="intel_cpu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\intel_cpu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="intel_cpu_unselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\intel_cpu_unselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="intel_dgpu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\intel_dgpu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="microsoft_cpu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\microsoft_cpu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="microsoft_cpu_unselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\microsoft_cpu_unselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="nvidia_dgpu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\nvidia_dgpu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="nvidia_dgpu_unselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\nvidia_dgpu_unselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="qualcomm_cpu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\qualcomm_cpu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="qualcomm_igp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\qualcomm_igp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="amd_igp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\amd_igp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="amd_igp_unselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\amd_igp_unselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="intel_igp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\intel_igp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="intel_igp_unselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\intel_igp_unselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="intel_dgpu_unselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\intel_dgpu_unselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="qualcomm_cpu_unselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\qualcomm_cpu_unselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="qualcomm_igp_unselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\qualcomm_igp_unselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="other_cpu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\other_cpu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="other_cpu_unselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\other_cpu_unselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="other_dgpu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\other_dgpu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="other_dgpu_unselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\other_dgpu_unselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="other_igp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\other_igp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="other_igp_unselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\other_igp_unselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
