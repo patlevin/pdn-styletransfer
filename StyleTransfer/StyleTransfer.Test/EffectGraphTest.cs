@@ -1,11 +1,9 @@
-﻿namespace PaintDotNet.Effects.ML.StyleTransfer.Test
-{
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System;
-    using System.Drawing;
-    using System.IO;
-    using System.Runtime.InteropServices;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Drawing;
 
+namespace PaintDotNet.Effects.ML.StyleTransfer.Test
+{
     class ModelProvider : IModelProvider
     {
         public ModelType StyleType { get; set; }
