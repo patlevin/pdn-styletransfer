@@ -1,53 +1,25 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\packages\Microsoft.AI.DirectML.1.5.1\build\Microsoft.AI.DirectML.props" Condition="Exists('..\packages\Microsoft.AI.DirectML.1.5.1\build\Microsoft.AI.DirectML.props')" />
   <Import Project="..\packages\Microsoft.ML.OnnxRuntime.DirectML.1.8.0\build\netstandard1.1\Microsoft.ML.OnnxRuntime.DirectML.props" Condition="Exists('..\packages\Microsoft.ML.OnnxRuntime.DirectML.1.8.0\build\netstandard1.1\Microsoft.ML.OnnxRuntime.DirectML.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{41AE6A2E-00DD-40A4-AB90-577808C21A4D}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PaintDotNet.Effects.ML.StyleTransfer</RootNamespace>
-    <AssemblyName>StyleTransferEffect</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
-    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
-  <PropertyGroup>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.ML.OnnxRuntime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f27f157f0a5b7bb6, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ML.OnnxRuntime.Managed.1.8.0\lib\netstandard1.1\Microsoft.ML.OnnxRuntime.dll</HintPath>
-    </Reference>
     <Reference Include="PaintDotNet.Base">
       <HintPath>C:\Program Files\paint.net\PaintDotNet.Base.dll</HintPath>
     </Reference>
@@ -60,161 +32,18 @@
     <Reference Include="PaintDotNet.Effects">
       <HintPath>C:\Program Files\paint.net\PaintDotNet.Effects.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Color\CholeskyTransfer.cs" />
-    <Compile Include="Color\ColorTransfer.cs" />
-    <Compile Include="Color\IColorTransfer.cs" />
-    <Compile Include="Color\ImageAnalogies.cs" />
-    <Compile Include="Color\LinearTransfer.cs" />
-    <Compile Include="Color\LuminanceOnlyTransfer.cs" />
-    <Compile Include="Color\PixelOps.cs" />
-    <Compile Include="Color\Sampler.cs" />
-    <Compile Include="Color\TransferMethodAttribute.cs" />
-    <Compile Include="Color\TransferMethods.cs" />
-    <Compile Include="Dml\Adapter.cs" />
-    <Compile Include="Dml\ComObject.cs" />
-    <Compile Include="Dml\Devices.cs" />
-    <Compile Include="Dml\Factory.cs" />
-    <Compile Include="EffectGraph.cs" />
-    <Compile Include="EffectModel.cs" />
-    <Compile Include="EffectParams.cs" />
-    <Compile Include="IEffectModel.cs" />
-    <Compile Include="IEffectParams.cs" />
-    <Compile Include="IModelProvider.cs" />
-    <Compile Include="IStyleModel.cs" />
-    <Compile Include="ITransformModel.cs" />
-    <Compile Include="Maths\Hashes.cs" />
-    <Compile Include="Maths\IVector3.cs" />
-    <Compile Include="Maths\LinAlg.cs" />
-    <Compile Include="Maths\MathF.cs" />
-    <Compile Include="Maths\Matrix3.cs" />
-    <Compile Include="Maths\Matrix3Wrapper.cs" />
-    <Compile Include="Maths\MatrixOps.cs" />
-    <Compile Include="Maths\Vector3.cs" />
-    <Compile Include="Maths\Vector3Ref.cs" />
-    <Compile Include="Maths\VectorOps.cs" />
-    <Compile Include="Plugin\ArchiveSource.cs" />
-    <Compile Include="Plugin\CsvSource.cs" />
-    <Compile Include="Plugin\EffectPreview.cs">
+    <Compile Update="Plugin\EffectPreview.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Plugin\EffectPreview.Designer.cs">
-      <DependentUpon>EffectPreview.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Plugin\ExtendedTrackBar.cs">
+    <Compile Update="Plugin\ExtendedTrackBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Plugin\ExtendedTrackBar.Designer.cs">
-      <DependentUpon>ExtendedTrackBar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Plugin\ModelProvider.cs" />
-    <Compile Include="Plugin\PluginSupportInfo.cs" />
-    <Compile Include="Plugin\Preset.cs" />
-    <Compile Include="Plugin\Presets.cs" />
-    <Compile Include="Plugin\PresetSource.cs" />
-    <Compile Include="SurfaceExtensions.cs" />
-    <Compile Include="Plugin\AssemblyBindingRedirectHelper.cs" />
-    <Compile Include="Plugin\ConfigDialogBase.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Plugin\Directories.cs" />
-    <Compile Include="Plugin\HelpProvider.cs">
+    <Compile Update="Plugin\HelpProvider.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Plugin\ModelData.cs" />
-    <Compile Include="Plugin\StyleTransferEffect.cs" />
-    <Compile Include="Plugin\StyleTransferEffectConfigDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Plugin\StyleTransferEffectConfigDialog.Designer.cs">
-      <DependentUpon>StyleTransferEffectConfigDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Plugin\StyleTransferEffectConfigToken.cs" />
-    <Compile Include="Plugin\StyleTransferEffectProperties.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="RangedValue.cs" />
-    <Compile Include="StringResources.cs" />
-    <Compile Include="StyleModel.cs" />
-    <Compile Include="TensorExtensions.cs" />
-    <Compile Include="TiledRenderer.cs" />
-    <Compile Include="TransformerModel.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Plugin\EffectPreview.resx">
-      <DependentUpon>EffectPreview.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Plugin\ExtendedTrackBar.resx">
-      <DependentUpon>ExtendedTrackBar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.es-MX.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.es-ES.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.fr.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Plugin\StyleTransferEffectConfigDialog.resx">
-      <DependentUpon>StyleTransferEffectConfigDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.de.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.en-GB.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.pt-PT.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.ru.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Reset.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Warning.png" />
-    <None Include="Resources\Icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\StylePreview.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\amd_cpu.png" />
@@ -237,28 +66,21 @@
     <Content Include="Resources\microsoft_cpu_unselected.png" />
     <Content Include="Resources\nvidia_dgpu.png" />
     <Content Include="Resources\nvidia_dgpu_unselected.png" />
-    <None Include="Resources\other_cpu.png" />
-    <None Include="Resources\other_cpu_unselected.png" />
-    <None Include="Resources\other_dgpu.png" />
-    <None Include="Resources\other_dgpu_unselected.png" />
-    <None Include="Resources\other_igp.png" />
-    <None Include="Resources\other_igp_unselected.png" />
     <Content Include="Resources\qualcomm_cpu.png" />
     <Content Include="Resources\qualcomm_cpu_unselected.png" />
     <Content Include="Resources\qualcomm_igp.png" />
     <Content Include="Resources\qualcomm_igp_unselected.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.ML.OnnxRuntime.Managed.1.8.0\build\netstandard1.1\Microsoft.ML.OnnxRuntime.Managed.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ML.OnnxRuntime.Managed.1.8.0\build\netstandard1.1\Microsoft.ML.OnnxRuntime.Managed.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.ML.OnnxRuntime.DirectML.1.8.0\build\netstandard1.1\Microsoft.ML.OnnxRuntime.DirectML.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ML.OnnxRuntime.DirectML.1.8.0\build\netstandard1.1\Microsoft.ML.OnnxRuntime.DirectML.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.ML.OnnxRuntime.DirectML.1.8.0\build\netstandard1.1\Microsoft.ML.OnnxRuntime.DirectML.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ML.OnnxRuntime.DirectML.1.8.0\build\netstandard1.1\Microsoft.ML.OnnxRuntime.DirectML.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.AI.DirectML.1.5.1\build\Microsoft.AI.DirectML.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.AI.DirectML.1.5.1\build\Microsoft.AI.DirectML.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.AI.DirectML.1.5.1\build\Microsoft.AI.DirectML.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.AI.DirectML.1.5.1\build\Microsoft.AI.DirectML.targets'))" />
-  </Target>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.ML.OnnxRuntime.DirectML" Version="1.8.1" />
+    <PackageReference Include="System.Memory" Version="4.5.4" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
+    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.2.237901">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="5.0.2" />
+  </ItemGroup>
   <Import Project="..\packages\Microsoft.ML.OnnxRuntime.Managed.1.8.0\build\netstandard1.1\Microsoft.ML.OnnxRuntime.Managed.targets" Condition="Exists('..\packages\Microsoft.ML.OnnxRuntime.Managed.1.8.0\build\netstandard1.1\Microsoft.ML.OnnxRuntime.Managed.targets')" />
   <Import Project="..\packages\Microsoft.ML.OnnxRuntime.DirectML.1.8.0\build\netstandard1.1\Microsoft.ML.OnnxRuntime.DirectML.targets" Condition="Exists('..\packages\Microsoft.ML.OnnxRuntime.DirectML.1.8.0\build\netstandard1.1\Microsoft.ML.OnnxRuntime.DirectML.targets')" />
   <Import Project="..\packages\Microsoft.AI.DirectML.1.5.1\build\Microsoft.AI.DirectML.targets" Condition="Exists('..\packages\Microsoft.AI.DirectML.1.5.1\build\Microsoft.AI.DirectML.targets')" />
