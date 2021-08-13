@@ -79,7 +79,9 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Test
             var root = LinAlg.SolveCubic(-1, -6, 0);
 
             Assert.AreEqual(3, root.Length);
-            Assert.AreEqual((-2, 3, 0), (root[0], root[1], root[2]));
+            Assert.AreEqual(-2f, root[0], 0.00001f);
+            Assert.AreEqual(3f, root[1], 0.00001f);
+            Assert.AreEqual(0f, root[2], 0.00001f);
         }
 
         [TestMethod("Eigenvalues returns eigenvalues of a matrix")]
@@ -88,7 +90,10 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Test
             var A = new Matrix3(new float[] { 1, 1, 0, 2, 2, 0, 1, 2, -2 });
             var Eigenvalues = new Vector3(-2, 3, 0);
             var e = LinAlg.Eigenvalues(A);
-            Assert.AreEqual(Eigenvalues, new Vector3(e));
+
+            Assert.AreEqual(Eigenvalues[0], e[0], 0.00001f);
+            Assert.AreEqual(Eigenvalues[1], e[1], 0.00001f);
+            Assert.AreEqual(Eigenvalues[2], e[2], 0.00001f);
         }
 
         [TestMethod("Eigenvalues returns eigenvalues with multplicity > 1")]
