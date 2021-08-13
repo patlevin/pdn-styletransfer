@@ -10,12 +10,13 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
     using System.Diagnostics.Contracts;
     using System.Drawing;
     using System.IO;
-    using System.Resources;
+    using System.Runtime.Versioning;
     using System.Windows.Forms;
 
     /// <summary>
     /// Style Transfer Effect configuration dialog
     /// </summary>
+    [SupportedOSPlatform("windows")]
     public partial class StyleTransferEffectConfigDialog  : ConfigDialogBase
     {
         const int DEFAULT_SIZE = 50;            // Default style image size (percentage)

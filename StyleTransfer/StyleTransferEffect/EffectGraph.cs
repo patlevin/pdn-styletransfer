@@ -7,6 +7,7 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Drawing;
+using System.Runtime.Versioning;
 
 namespace PaintDotNet.Effects.ML.StyleTransfer
 {
@@ -173,6 +174,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
         /// <param name="size">Size of the input in pixels</param>
         /// <param name="margin">Tile margin in percent [0, 1.0]</param>
         /// <returns>Maximum tile size that can be processed safely</returns>
+        [SupportedOSPlatform("windows")]
         public static Size GetRecommendedTileSize(Size size, float margin)
         {
             // the .NET heap *will* allocate much more than 33% of the available RAM
@@ -200,6 +202,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer
         /// <summary>
         /// Get the available system memory in bytes
         /// </summary>
+        [SupportedOSPlatform("windows")]
         public static long AvailableMemory
         {
             get

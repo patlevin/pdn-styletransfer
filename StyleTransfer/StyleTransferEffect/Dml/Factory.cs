@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
 namespace PaintDotNet.Effects.ML.StyleTransfer.Dml
 {
@@ -7,6 +8,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Dml
     /// Minimal wrapper around IDXGIFactory1
     /// see https://docs.microsoft.com/en-us/windows/win32/api/dxgi/nn-dxgi-idxgifactory1
     /// </summary>
+    [SupportedOSPlatform("windows")]
     class Factory : ComObject
     {
         static Guid uuid = new Guid("770aae78-f26f-4dba-a829-253c83d1b387");

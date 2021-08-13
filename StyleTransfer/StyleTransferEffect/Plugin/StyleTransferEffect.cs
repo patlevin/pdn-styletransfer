@@ -9,6 +9,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
     using System.Drawing;
     using System.Globalization;
     using System.Linq;
+    using System.Runtime.Versioning;
     using System.Windows.Forms;
 
     /// <summary>
@@ -35,6 +36,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Plugin
     /// 4. OnRender() is not called after config dialog closes
     /// 
     /// </remarks>
+    [SupportedOSPlatform("windows")]
     public class StyleTransferEffect : Effect<StyleTransferEffectConfigToken>
     {
         // tile margin in percent [0..1]

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
 namespace PaintDotNet.Effects.ML.StyleTransfer.Dml
 {
@@ -36,6 +37,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Dml
     /// Minimal wrapper for IDXGIAdapter1
     /// see https://docs.microsoft.com/en-us/windows/win32/api/dxgi/nn-dxgi-idxgiadapter1
     /// </summary>
+    [SupportedOSPlatform("windows")]
     class Adapter : ComObject
     {
         // Remote flag

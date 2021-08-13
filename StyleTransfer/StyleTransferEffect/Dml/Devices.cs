@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Management;
+using System.Runtime.Versioning;
 using System.Text.RegularExpressions;
 
 namespace PaintDotNet.Effects.ML.StyleTransfer.Dml
@@ -78,6 +79,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Dml
     /// <summary>
     /// DML device list.
     /// </summary>
+    [SupportedOSPlatform("windows")]
     public static class Devices
     {
         /// <summary>

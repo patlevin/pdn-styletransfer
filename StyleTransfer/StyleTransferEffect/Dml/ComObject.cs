@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
 namespace PaintDotNet.Effects.ML.StyleTransfer.Dml
 {
@@ -58,6 +59,7 @@ namespace PaintDotNet.Effects.ML.StyleTransfer.Dml
     /// This avoids messing with importing type libraries and generating
     /// unused code.
     /// </remarks>
+    [SupportedOSPlatform("windows")]
     abstract class ComObject : IDisposable
     {
         // Interface UID
